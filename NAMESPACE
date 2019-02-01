@@ -1,0 +1,19 @@
+
+import("grid")
+
+import("polyclip")
+
+export("grobPolygon",
+       
+       "polyclip")
+
+
+S3method("grobClosed", "grob")
+S3method("grobClosed", "xspline")
+
+S3method("grobPolygon", "circle")
+S3method("grobPolygon", "gList")
+S3method("grobPolygon", "rect")
+S3method("grobPolygon", "xspline")
+
+exportMethods("polyclip")
