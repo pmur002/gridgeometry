@@ -67,3 +67,17 @@ grid.draw(c1)
 grid.draw(c2)
 grid.draw(l)
 grid.draw(p)
+
+## grob with 'vp' slot
+grid.newpage()
+pushViewport(viewport(width=.5, height=.5))
+grid.rect(gp=gpar(col=NA, fill="grey"))
+r1 <- rectGrob(width=.5, height=.5, gp=gpar(col="red"))
+r2 <- rectGrob(vp=viewport(.25, .25, .5, .25, angle=45),
+               gp=gpar(col="blue"))
+p <- polyclip(r1, r2, name="p", op="minus",
+              gp=gpar(col=NA, fill=rgb(0,0,0,.5), lwd=5))
+grid.draw(r1)
+grid.draw(r2)
+grid.draw(p)
+

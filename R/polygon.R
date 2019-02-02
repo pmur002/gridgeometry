@@ -5,6 +5,10 @@ grobPolygon <- function(x, ...) {
     UseMethod("grobPolygon")
 }
 
+grobPoints <- function(x, ...) {
+    UseMethod("grobPoints")
+}
+
 grobClosed <- function(x, ...) {
     UseMethod("grobClosed")
 }
@@ -13,7 +17,30 @@ grobClosed.grob <- function(x, ...) {
     TRUE
 }
 
-grobPolygon.circle <- function(x, n=100, ...) {
+grobPolygon.grob <- function(x, ...) {
+    ## Does this grob change the viewport
+    vpgrob <- !is.null(x$vp)
+    if (vpgrob) {
+        trans <- current.transform()
+    }
+    ## Enforce 'gp' and 'vp'
+    x <- preDraw(x)
+    ## Polygon outline in inches
+    pts <- grobPoints(x, ...)
+    if (vpgrob) {
+        ## Calc locations on device
+        pts <- deviceLoc(unit(pts$x, "in"), unit(pts$y, "in"), valueOnly=TRUE)
+    }
+    postDraw(x)
+    if (vpgrob) {
+        ## Transform back to locations
+        ptsMatrix <- cbind(pts$x, pts$y, 1) %*% solve(trans)
+        pts <- list(x=ptsMatrix[,1], y=ptsMatrix[,2])
+    }
+    pts
+}
+
+grobPoints.circle <- function(x, n=100, ...) {
     cx <- convertX(x$x, "in", valueOnly=TRUE)
     cy <- convertY(x$y, "in", valueOnly=TRUE)
     r <- min(convertWidth(x$r, "in", valueOnly=TRUE),
@@ -24,7 +51,8 @@ grobPolygon.circle <- function(x, n=100, ...) {
     list(x=xx, y=yy)
 }
 
-grobPolygon.rect <- function(x, ...) {
+
+grobPoints.rect <- function(x, ...) {
     hjust <- resolveHJust(x$just, x$hjust)
     vjust <- resolveVJust(x$just, x$vjust)
     w <- convertWidth(x$width, "in", valueOnly=TRUE)
@@ -37,7 +65,7 @@ grobPolygon.rect <- function(x, ...) {
          y=c(bottom, top, top, bottom))
 }
 
-grobPolygon.xspline <- function(x, ...) {
+grobPoints.xspline <- function(x, ...) {
     trace <- xsplinePoints(x)
     list(x=convertX(trace$x, "in", valueOnly=TRUE),
          y=convertY(trace$y, "in", valueOnly=TRUE))
