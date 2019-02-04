@@ -71,7 +71,7 @@ grid.draw(p)
 ## grob with 'vp' slot
 grid.newpage()
 pushViewport(viewport(width=.5, height=.5))
-grid.rect(gp=gpar(col=NA, fill="grey"))
+grid.rect(gp=gpar(col="grey"))
 r1 <- rectGrob(width=.5, height=.5, gp=gpar(col="red"))
 r2 <- rectGrob(vp=viewport(.25, .25, .5, .25, angle=45),
                gp=gpar(col="blue"))
@@ -81,3 +81,15 @@ grid.draw(r1)
 grid.draw(r2)
 grid.draw(p)
 
+## gList that is combination of open and closed shapes
+grid.newpage()
+g1 <- gList(rectGrob(width=.5, height=.5, gp=gpar(col="red")),
+            xsplineGrob(c(.25, .5, .75),
+                        c(.75, .5, .75),
+                        gp=gpar(col="red")))
+g2 <- circleGrob(.75, .75, .2, gp=gpar(col="blue"))
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)

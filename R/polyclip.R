@@ -46,15 +46,29 @@ setGeneric("polyclip",
 setMethod("polyclip",
           c("gridgrob", "gridgrob"),
           function(A, B, name=NULL, gp=gpar(), ...) {
-              closed <- grobClosed(A)
-              result <- polyclip::polyclip(grobPolygon(A),
-                                           grobPolygon(B),
-                                           closed=closed,
-                                           ...)
-              if (closed)
-                  polyclipPath(result, name, gp)
-              else
-                  polyclipLine(result, name, gp)
+              closedPolys <- grobPolygon(A, closed=TRUE)
+              openPolys <- grobPolygon(A, closed=FALSE)
+              children <- vector("list", 2)
+              if (!is.null(closedPolys)) {
+                  closedPaths <- polyclip::polyclip(closedPolys,
+                                                    grobPolygon(B, TRUE),
+                                                    closed=TRUE,
+                                                    ...)
+                  children[[1]] <- polyclipPath(closedPaths,
+                                                paste0(name, ".open"),
+                                                gp)
+              } 
+              if (!is.null(openPolys)) {
+                  openPaths <- polyclip::polyclip(openPolys,
+                                                  grobPolygon(B, TRUE),
+                                                  closed=FALSE,
+                                                  ...)
+                  children[[2]] <- polyclipLine(openPaths, 
+                                                paste0(name, ".closed"),
+                                                gp)
+              }
+              gTree(children=do.call(gList, children[!is.null(children)]),
+                    name=name)
           })
 
 

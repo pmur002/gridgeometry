@@ -9,9 +9,6 @@ export("grobPoints",
        "polyclip")
 
 
-S3method("grobClosed", "grob")
-S3method("grobClosed", "xspline")
-
 S3method("grobPoints", "circle")
 S3method("grobPoints", "rect")
 S3method("grobPoints", "xspline")
