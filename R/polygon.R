@@ -10,21 +10,24 @@ grobPoints <- function(x, closed, ...) {
 }
 
 grobPolygon.grob <- function(x, closed, ...) {
-    ## Does this grob change the viewport
-    vpgrob <- !is.null(x$vp)
-    if (vpgrob) {
-        trans <- current.transform()
-    }
+    vp <- x$vp
+    trans <- current.transform()
     ## Enforce 'gp' and 'vp'
     x <- preDraw(x)
+    ## Does this grob change the viewport ?
+    ## (including has preDraw() changed the viewport)
+    vpgrob <- !is.null(x$vp) || !identical(vp, x$vp)
+    ## Generate any draw-time content
+    x <- makeContent(x)
     ## Polygon outline in inches
     pts <- grobPoints(x, closed, ...)
-    if (vpgrob) {
+    if (vpgrob && !is.null(pts)) {
         ## Calc locations on device
-        pts <- deviceLoc(unit(pts$x, "in"), unit(pts$y, "in"), valueOnly=TRUE)
+        pts <- deviceLoc(unit(pts$x, "in"), unit(pts$y, "in"),
+                         valueOnly=TRUE)
     }
     postDraw(x)
-    if (vpgrob) {
+    if (vpgrob && !is.null(pts)) {
         ## Transform back to locations
         ptsMatrix <- cbind(pts$x, pts$y, 1) %*% solve(trans)
         pts <- list(x=ptsMatrix[,1], y=ptsMatrix[,2])
@@ -47,6 +50,15 @@ grobPoints.circle <- function(x, closed, ..., n=100) {
     }
 }
 
+grobPoints.polygon <- function(x, closed, ...) {
+    if (closed) {
+        xx <- convertX(x$x, "in", valueOnly=TRUE)
+        yy <- convertY(x$y, "in", valueOnly=TRUE)
+        list(x=xx, y=yy)
+    } else {
+        NULL
+    }
+}
 
 grobPoints.rect <- function(x, closed, ...) {
     if (closed) {

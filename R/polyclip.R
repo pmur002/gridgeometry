@@ -1,8 +1,10 @@
 
 ## Make 'grid' S3 classes (including class hierarchy) visible to S4
 setOldClass("grob")
-setOldClass(c("rect", "grob"))
 setOldClass(c("circle", "grob"))
+setOldClass(c("polygon", "grob"))
+setOldClass(c("rect", "grob"))
+setOldClass(c("roundrect", "grob"))
 setOldClass(c("xspline", "grob"))
 setOldClass("gList")
 

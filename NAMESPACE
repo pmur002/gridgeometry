@@ -10,6 +10,7 @@ export("grobPoints",
 
 
 S3method("grobPoints", "circle")
+S3method("grobPoints", "polygon")
 S3method("grobPoints", "rect")
 S3method("grobPoints", "xspline")
 

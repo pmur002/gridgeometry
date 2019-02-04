@@ -1,6 +1,8 @@
 
 library(gridGeometry)
 
+pdf("tests.pdf")
+
 ## Two rectangles
 r1 <- rectGrob(.4, .4, .4, .4, gp=gpar(col="red", lwd=5))
 r2 <- rectGrob(.6, .6, .4, .4, gp=gpar(col="blue", lwd=5))
@@ -9,7 +11,6 @@ r2 <- rectGrob(.6, .6, .4, .4, gp=gpar(col="blue", lwd=5))
 p <- polyclip(r1, r2, name="p",
               gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
 
-grid.newpage()
 grid.draw(r1)
 grid.draw(r2)
 grid.draw(p)
@@ -93,3 +94,58 @@ p <- polyclip(g1, g2, name="p", op="minus",
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
+
+## grob that has makeContent() method
+## (gridGeometry::grobPolygon() calls makeContent() => no need to grid.force())
+grid.newpage()
+g1 <- roundrectGrob(width=.5, height=.5)
+g2 <- circleGrob(.75, .75, .2, gp=gpar(col="blue"))
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)
+
+dev.off()
+
+
+
+## Check graphical output
+testoutput <- function(basename) {
+    PDF <- paste0(basename, ".pdf")
+    savedPDF <- system.file("regression-tests", paste0(basename, ".save.pdf"),
+                            package="gridGeometry")
+    system(paste0("pdfseparate ", PDF, " test-pages-%d.pdf"))
+    system(paste0("pdfseparate ", savedPDF, " model-pages-%d.pdf"))
+    modelFiles <- list.files(pattern="model-pages-.*[.]pdf")
+    N <- length(modelFiles)
+    allGood <- TRUE
+    testFiles <- list.files(pattern="test-pages-.*[.]pdf")
+    if (length(testFiles) != N) {
+        cat(sprintf("Number of test pages (%d) and model pages (%d) differ\n",
+                    length(testFiles), N))
+        allGood <- FALSE
+    }
+    for (i in 1:N) {
+        system(paste0("convert -density 96 ",
+                      "model-pages-", i, ".pdf ",
+                      "model-pages-", i, ".png"))
+        system(paste0("convert -density 96 ",
+                      "test-pages-", i, ".pdf ",
+                      "test-pages-", i, ".png"))
+        result <- system(paste0("compare -metric AE ",
+                                "model-pages-", i, ".png ",
+                                "test-pages-", i, ".png ",
+                                "diff-pages-", i, ".png ",
+                                "2>&1"), intern=TRUE)
+        if (result != "0") {
+            cat(paste0("Test and model differ (page ", i, "; ",
+                       "see diff-pages-", i, ".png)\n"))
+            allGood <- FALSE
+        }
+    }
+    if (!allGood)
+        stop("Regression testing detected differences")
+}
+
+testoutput("tests")
