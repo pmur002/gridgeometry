@@ -106,9 +106,89 @@ grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
 
+## a gTree
+grid.newpage()
+g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
+                           circleGrob(r=.25)),
+            gp=gpar(col="red"))
+g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)
+
+## a gTree as the "clipping" polygon
+grid.newpage()
+g1 <- circleGrob(.75, .75, .15, gp=gpar(col="red"))
+g2 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
+                           circleGrob(r=.25)),
+            gp=gpar(col="blue"))
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)
+
+## a gTree with a 'vp' slot
+grid.newpage()
+g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
+                           circleGrob(r=.25)),
+            vp=viewport(angle=45),
+            gp=gpar(col="red"))
+g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)
+
+## a gTree with 'childrenvp' slot
+grid.newpage()
+g1 <- gTree(childrenvp=viewport(angle=45, name="vp"),
+            children=gList(roundrectGrob(width=.5, height=.5, vp="vp"),
+                           circleGrob(r=.25, vp="vp")),
+            gp=gpar(col="red"))
+g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)
+
+## a gTree with 'vp' slot and child with 'vp' slot
+grid.newpage()
+g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5,
+                                         vp=viewport(angle=10)),
+                           circleGrob(r=.25)),
+            vp=viewport(angle=45),
+            gp=gpar(col="red"))
+g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)
+
+## Destruction test
+library(lattice)
+g1 <- grid.grabExpr(expression(print(histogram(~ disp, mtcars))))
+g2 <- circleGrob()
+p <- polyclip(g1, g2, name="p", op="minus",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.newpage()
+grid.draw(g1)
+grid.draw(g2)
+grid.draw(p)
+
+grid.newpage()
+grid.draw(p)
+
+
+
 dev.off()
 
-
+####################### REGRESSION CHECK #######################################
 
 ## Check graphical output
 testoutput <- function(basename) {
