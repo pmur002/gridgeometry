@@ -6,6 +6,10 @@ import("polyclip")
 export("grobPoints",
        "grobPolygon",
 
+       "polyclipPath",
+       "polyclipPolygon",
+       "polyclipLine",
+
        "polyclip")
 
 
