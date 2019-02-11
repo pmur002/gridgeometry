@@ -9,6 +9,8 @@ grobPoints <- function(x, closed, ...) {
     UseMethod("grobPoints")
 }
 
+emptyPolygon <- list(x = 0, y = 0)
+
 grobPolygon.grob <- function(x, closed, ...) {
     vp <- x$vp
     trans <- current.transform()
@@ -21,7 +23,7 @@ grobPolygon.grob <- function(x, closed, ...) {
     x <- makeContent(x)
     ## Polygon outline in inches
     pts <- grobPoints(x, closed, ...)
-    if (vpgrob && !is.null(pts)) {
+    if (vpgrob && !identical(pts, emptyPolygon)) {
         ## Calc locations on device
         pts <- lapply(pts,
                       function(p) {
@@ -30,7 +32,7 @@ grobPolygon.grob <- function(x, closed, ...) {
                       })
     }
     postDraw(x)
-    if (vpgrob && !is.null(pts)) {
+    if (vpgrob && !identical(pts, emptyPolygon)) {
         ## Transform back to locations
         pts <- lapply(pts,
                       function(p) {
@@ -57,13 +59,13 @@ grobPoints.circle <- function(x, closed, ..., n=100) {
                         y=circs[i, 2] + circs[i, 3]*sin(t))
                })
     } else {
-        NULL
+        emptyPolygon
     }
 }
 
 grobPoints.lines <- function(x, closed, ..., n=100) {
     if (closed) {
-        NULL
+        emptyPolygon
     } else {
         xx <- convertX(x$x, "in", valueOnly=TRUE)
         yy <- convertY(x$y, "in", valueOnly=TRUE)
@@ -94,7 +96,7 @@ grobPoints.polygon <- function(x, closed, ...) {
             }
         }
     } else {
-        NULL
+        emptyPolygon
     }
 }
 
@@ -120,13 +122,13 @@ grobPoints.rect <- function(x, closed, ...) {
         rects <- cbind(left, right, bottom, top)
         xyListFromMatrix(rects, c(1, 1, 2, 2), c(3, 4, 4, 3))
     } else {
-        NULL
+        emptyPolygon
     }
 }
 
 grobPoints.segments <- function(x, closed, ...) {
     if (closed) {
-        NULL
+        emptyPolygon
     } else {
         x0 <- convertX(x$x0, "in", valueOnly=TRUE)
         x1 <- convertX(x$x1, "in", valueOnly=TRUE)
@@ -140,7 +142,7 @@ grobPoints.segments <- function(x, closed, ...) {
 
 grobPoints.text <- function(x, closed, ...) {
     warning("Text grobs are ignored by polyclip()")
-    NULL
+    emptyPolygon
 }
 
 grobPoints.xspline <- function(x, closed, ...) {
@@ -159,7 +161,7 @@ grobPoints.xspline <- function(x, closed, ...) {
                    })
         }
     } else {
-        NULL
+        emptyPolygon
     }
 }
 
@@ -195,7 +197,7 @@ grobPolygon.gTree <- function(x, closed, ...) {
     x <- makeContent(x)
     ## Polygon outline in inches
     pts <- grobPolygon(x$children[x$childrenOrder], closed, ...)
-    if (vpgrob && !is.null(pts)) {
+    if (vpgrob && !identical(pts, emptyPolygon)) {
         ## Calc locations on device
         pts <- lapply(pts,
                       function(p) {
@@ -204,7 +206,7 @@ grobPolygon.gTree <- function(x, closed, ...) {
                       })
     }
     postDraw(x)
-    if (vpgrob && !is.null(pts)) {
+    if (vpgrob && !identical(pts, emptyPolygon)) {
         ## Transform back to locations
         pts <- lapply(pts,
                       function(p) {

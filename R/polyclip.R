@@ -15,48 +15,6 @@ setOldClass(c("gTree", "grob"))
 ## Combine "grob"s and "gList"s so can have one method for both
 setClassUnion("gridgrob", c("grob", "gList"))
 
-## Convert (closed) 'polyclip' polygon result to 'grid' path
-polyclipPath <- function(x, name, gp) {
-    if (length(x)) {
-        xx <- unlist(lapply(x, "[[", "x"))
-        yy <- unlist(lapply(x, "[[", "y"))
-        lengths <- sapply(x, function(y) length(y$x))
-        pathGrob(xx, yy, default.units="in",
-                 id.lengths=lengths,
-                 name=name, gp=gp)
-    } else {
-        nullGrob(name=name)
-    }
-}
-
-## Convert (closed) 'polyclip' polygon result to 'grid' polygons
-polyclipPolygon <- function(x, name, gp) {
-    if (length(x)) {
-        xx <- unlist(lapply(x, "[[", "x"))
-        yy <- unlist(lapply(x, "[[", "y"))
-        lengths <- sapply(x, function(y) length(y$x))
-        polygonGrob(xx, yy, default.units="in",
-                    id.lengths=lengths,
-                    name=name, gp=gp)
-    } else {
-        nullGrob(name=name)
-    }
-}
-
-## Convert (open) 'polyclip' polygon result to 'grid' polyline
-polyclipLine <- function(x, name, gp) {
-    if (length(x)) {
-        xx <- unlist(lapply(x, "[[", "x"))
-        yy <- unlist(lapply(x, "[[", "y"))
-        lengths <- sapply(x, function(y) length(y$x))
-        polylineGrob(xx, yy, default.units="in",
-                     id.lengths=lengths,
-                     name=name, gp=gp)
-    } else {
-        nullGrob(name=name)
-    }
-}
-
 ## Create S4 generic from polyclip::polyclip()
 setGeneric("polyclip",
            function(A, B, ...) {
@@ -66,34 +24,10 @@ setGeneric("polyclip",
 ## Grob methods
 setMethod("polyclip",
           c("gridgrob", "gridgrob"),
-          function(A, B, op="intersection", name=NULL, gp=gpar(),
-                   closedGrob=polyclipPath, openGrob=polyclipLine,
-                   ...) {
-              closedPolys <- grobPolygon(A, closed=TRUE)
-              openPolys <- grobPolygon(A, closed=FALSE)
-              children <- vector("list", 2)
-              if (!is.null(closedPolys)) {
-                  closedPaths <- polyclip::polyclip(closedPolys,
-                                                    grobPolygon(B, TRUE),
-                                                    op=op,
-                                                    closed=TRUE,
-                                                    ...)
-                  children[[1]] <- closedGrob(closedPaths,
-                                              paste0(name, ".open"),
-                                              gp)
-              } 
-              if (!is.null(openPolys)) {
-                  openPaths <- polyclip::polyclip(openPolys,
-                                                  grobPolygon(B, TRUE),
-                                                  op=op,
-                                                  closed=FALSE,
-                                                  ...)
-                  children[[2]] <- openGrob(openPaths, 
-                                            paste0(name, ".closed"),
-                                            gp)
-              }
-              gTree(children=do.call(gList, children[!is.null(children)]),
-                    name=name)
+          function(A, B, op="intersection", closed=TRUE, ...) {
+              polyA <- grobPolygon(A, closed=closed)
+              polyB <- grobPolygon(B, TRUE)
+              polyclip::polyclip(polyA, polyB, op=op, closed=closed, ...)
           })
 
 

@@ -8,16 +8,16 @@ r1 <- rectGrob(.4, .4, .4, .4, gp=gpar(col="red", lwd=5))
 r2 <- rectGrob(.6, .6, .4, .4, gp=gpar(col="blue", lwd=5))
 
 ## Intersect the two
-p <- polyclip(r1, r2, name="p",
-              gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+p <- polyclipGrob(r1, r2, name="p",
+                  gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
 
 grid.draw(r1)
 grid.draw(r2)
 grid.draw(p)
 
 ## Merge the two
-p <- polyclip(r1, r2, op="union",
-              gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+p <- polyclipGrob(r1, r2, op="union",
+                  gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
 
 grid.newpage()
 grid.draw(r1)
@@ -25,8 +25,8 @@ grid.draw(r2)
 grid.draw(p)
 
 ## Take a chunk out of one with the other
-p <- polyclip(r1, r2, op="minus",
-              gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+p <- polyclipGrob(r1, r2, op="minus",
+                  gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
 
 grid.newpage()
 grid.draw(r1)
@@ -36,8 +36,8 @@ grid.draw(p)
 ## Two circles
 c1 <- circleGrob(.4, .5, r=.2, gp=gpar(col="red", lwd=5))
 c2 <- circleGrob(.6, .5, r=.2, gp=gpar(col="blue", lwd=5))
-p <- polyclip(c1, c2, name="p", op="minus",
-              gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+p <- polyclipGrob(c1, c2, name="p", op="minus",
+                  gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
 grid.newpage()
 grid.draw(c1)
 grid.draw(c2)
@@ -49,8 +49,8 @@ g2 <- gList(circleGrob(.7, .6, r=.2, gp=gpar(col="blue")),
             xsplineGrob(c(.2, .2, .4, .4),
                         c(.4, .8, .8, .4),
                         shape=1, open=FALSE, gp=gpar(col="blue")))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=NA, fill=rgb(0,0,0,.5)))
 grid.newpage()
 grid.draw(g1)
 grid.draw(g2)
@@ -61,8 +61,8 @@ c1 <- circleGrob(.2, .5, r=unit(.1, "npc"), gp=gpar(col="red"))
 c2 <- circleGrob(.8, .5, r=unit(.1, "npc"), gp=gpar(col="red"))
 l <- xsplineGrob(c(.2, .5, .8), c(.5, .3, .5), shape=1,
                  gp=gpar(col="blue"))
-p <- polyclip(l, gList(c1, c2), name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(l, gList(c1, c2), name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.newpage()
 grid.draw(c1)
 grid.draw(c2)
@@ -76,8 +76,8 @@ grid.rect(gp=gpar(col="grey"))
 r1 <- rectGrob(width=.5, height=.5, gp=gpar(col="red"))
 r2 <- rectGrob(vp=viewport(.25, .25, .5, .25, angle=45),
                gp=gpar(col="blue"))
-p <- polyclip(r1, r2, name="p", op="minus",
-              gp=gpar(col=NA, fill=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(r1, r2, name="p", op="minus",
+                  gp=gpar(col=NA, fill=rgb(0,0,0,.5), lwd=5))
 grid.draw(r1)
 grid.draw(r2)
 grid.draw(p)
@@ -89,8 +89,8 @@ g1 <- gList(rectGrob(width=.5, height=.5, gp=gpar(col="red")),
                         c(.75, .5, .75),
                         gp=gpar(col="red")))
 g2 <- circleGrob(.75, .75, .2, gp=gpar(col="blue"))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
@@ -100,8 +100,8 @@ grid.draw(p)
 grid.newpage()
 g1 <- roundrectGrob(width=.5, height=.5)
 g2 <- circleGrob(.75, .75, .2, gp=gpar(col="blue"))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
@@ -112,8 +112,8 @@ g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
                            circleGrob(r=.25)),
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
@@ -124,8 +124,8 @@ g1 <- circleGrob(.75, .75, .15, gp=gpar(col="red"))
 g2 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
                            circleGrob(r=.25)),
             gp=gpar(col="blue"))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
@@ -137,8 +137,8 @@ g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
             vp=viewport(angle=45),
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
@@ -150,8 +150,8 @@ g1 <- gTree(childrenvp=viewport(angle=45, name="vp"),
                            circleGrob(r=.25, vp="vp")),
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
@@ -164,8 +164,8 @@ g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5,
             vp=viewport(angle=45),
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
 grid.draw(p)
@@ -174,8 +174,8 @@ grid.draw(p)
 library(lattice)
 g1 <- grid.grabExpr(expression(print(histogram(~ disp, mtcars))))
 g2 <- circleGrob()
-p <- polyclip(g1, g2, name="p", op="minus",
-              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.newpage()
 grid.draw(g1)
 grid.draw(g2)

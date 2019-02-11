@@ -10,7 +10,10 @@ export("grobPoints",
        "polyclipPolygon",
        "polyclipLine",
 
-       "polyclip")
+       "polyclip",
+
+       "grid.polyclip",
+       "polyclipGrob")
 
 
 S3method("grobPoints", "circle")
@@ -24,5 +27,7 @@ S3method("grobPoints", "xspline")
 S3method("grobPolygon", "gList")
 S3method("grobPolygon", "grob")
 S3method("grobPolygon", "gTree")
+
+S3method("makeContent", "polyclipgrob")
 
 exportMethods("polyclip")
