@@ -25,8 +25,8 @@ setGeneric("polyclip",
 setMethod("polyclip",
           c("gridgrob", "gridgrob"),
           function(A, B, op="intersection", closed=TRUE, ...) {
-              polyA <- grobPolygon(A, closed=closed)
-              polyB <- grobPolygon(B, TRUE)
+              polyA <- grobCoords(A, closed=closed)
+              polyB <- grobCoords(B, TRUE)
               polyclip::polyclip(polyA, polyB, op=op, closed=closed, ...)
           })
 

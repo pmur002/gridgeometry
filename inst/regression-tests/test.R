@@ -96,9 +96,8 @@ grid.draw(g2)
 grid.draw(p)
 
 ## grob that has makeContent() method
-## (gridGeometry::grobPolygon() calls makeContent() => no need to grid.force())
 grid.newpage()
-g1 <- roundrectGrob(width=.5, height=.5)
+g1 <- roundrectGrob(width=.5, height=.5, gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .2, gp=gpar(col="blue"))
 p <- polyclipGrob(g1, g2, name="p", op="minus",
                   gp=gpar(col=rgb(0,0,0,.5), lwd=5))
