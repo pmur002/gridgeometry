@@ -8,4 +8,5 @@ Description: Functions for performing polygon geometry with 'grid' grobs.
              Based on the 'polyclip' package.
 Depends: R (>= 3.6.0), grid
 Imports: polyclip
+Suggests: graphics, lattice
 License: GPL (>= 2)

@@ -8,11 +8,18 @@ export("polyclipPath",
        "polyclipLine",
 
        "polyclip",
+       "trim",
 
        "grid.polyclip",
-       "polyclipGrob")
+       "grid.trim",
+       "polyclipGrob",
+       "trimGrob")
 
 
+S3method("trim", "default")
+S3method("trim", "grob")
+         
 S3method("makeContent", "polyclipgrob")
+S3method("makeContent", "trimgrob")
 
 exportMethods("polyclip")

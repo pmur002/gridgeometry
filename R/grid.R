@@ -32,3 +32,17 @@ polyclipGrob <- function(A, B, op="intersection",
 grid.polyclip <- function(...) {
     grid.draw(polyclipGrob(...))
 }
+
+makeContent.trimgrob <- function(x) {
+    pts <- trim(x$x, x$from, x$to)
+    polyclipLine(pts, name=paste0(x$name, ".lines"))
+}
+
+trimGrob <- function(x, from, to, name=NULL, gp=gpar(), ...) {
+    gTree(x=x, from=from, to=to, trimArgs=list(...),
+          gp=gp, name=name, cl="trimgrob")
+}
+
+grid.trim <- function(...) {
+    grid.draw(trimGrob(...))
+}

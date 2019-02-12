@@ -170,7 +170,7 @@ grid.draw(g2)
 grid.draw(p)
 
 ## Destruction test
-library(lattice)
+require(lattice)
 g1 <- grid.grabExpr(expression(print(histogram(~ disp, mtcars))))
 g2 <- circleGrob()
 p <- polyclipGrob(g1, g2, name="p", op="minus",
@@ -183,7 +183,35 @@ grid.draw(p)
 grid.newpage()
 grid.draw(p)
 
+## Trimming lines
+x <- 1:5
+y <- 1:5
+from <- 1:2/5
+to <- c(2, 4)/5
+require(graphics)
+testTrim <- function(x, y, from, to) {
+    trimmed <- trim(list(x=x, y=y), from, to)
+    par(pin=c(diff(range(x)), diff(range(y))))
+    plot(x, y, asp=1, xaxs="i", yaxs="i", pch=16)
+    mapply(function(x, col)
+               lines(x$x, x$y, col=col, lwd=5),
+           trimmed, adjustcolor(1:length(trimmed), alpha=.5))
+    trimmed
+}
+testTrim(x, y, from, to)
+y <- c(1:3, 2:1)
+testTrim(x, y, from, to)
+from <- unit(c(1, -1), "in")
+testTrim(x, y, from, to)
 
+## Trim a grob
+l <- xsplineGrob(c(.2, .5, .8), c(.5, .3, .5), shape=1,
+                 gp=gpar(col="red"))
+t <- trimGrob(l, from=unit(1, "cm"), to=c(.5, .8), name="t",
+              gp=gpar(col=rgb(0,0,0,.5), lwd=5))
+grid.newpage()
+grid.draw(l)
+grid.draw(t)
 
 dev.off()
 
