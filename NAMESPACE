@@ -3,9 +3,9 @@ import("grid")
 
 import("polyclip")
 
-export("polyclipPath",
-       "polyclipPolygon",
-       "polyclipLine",
+export("xyListPath",
+       "xyListPolygon",
+       "xyListLine",
 
        "polyclip",
        "trim",

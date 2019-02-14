@@ -21,7 +21,7 @@ makeContent.polyclipgrob <- function(x) {
 }
 
 polyclipGrob <- function(A, B, op="intersection",
-                         openFn=polyclipLine, closedFn=polyclipPath,
+                         openFn=xyListLine, closedFn=xyListPath,
                          name=NULL, gp=gpar(),
                          ...) {
     gTree(A=A, B=B, op=op, openFn=openFn, closedFn=closedFn,
@@ -35,7 +35,7 @@ grid.polyclip <- function(...) {
 
 makeContent.trimgrob <- function(x) {
     pts <- trim(x$x, x$from, x$to)
-    polyclipLine(pts, name=paste0(x$name, ".lines"))
+    xyListLine(pts, name=paste0(x$name, ".lines"))
 }
 
 trimGrob <- function(x, from, to, name=NULL, gp=gpar(), ...) {
