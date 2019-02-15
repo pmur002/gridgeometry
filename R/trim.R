@@ -28,9 +28,11 @@ trimLine <- function(line, from, to) {
     totLength <- sum(length)
     ## Reduce units to proportions
     if (is.unit(from) || is.unit(to)) {
-        ## Temporary viewport so "npc" units relative to length of line
-        pushViewport(viewport(width=unit(totLength, "in")))
-        on.exit(popViewport())
+        ## Temporary graphics device (!)
+        ## so "npc" units relative to length of line
+        cd <- dev.cur()
+        pdf(NULL, width=totLength)
+        on.exit(dev.set(cd))
     }
     if (is.unit(from))
         from <- convertX(from, "in", valueOnly=TRUE)/totLength

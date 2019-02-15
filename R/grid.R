@@ -35,7 +35,7 @@ grid.polyclip <- function(...) {
 
 makeContent.trimgrob <- function(x) {
     pts <- trim(x$x, x$from, x$to)
-    xyListLine(pts, name=paste0(x$name, ".lines"))
+    setChildren(x, gList(xyListLine(pts, name=paste0(x$name, ".lines"))))
 }
 
 trimGrob <- function(x, from, to, name=NULL, gp=gpar(), ...) {
