@@ -34,12 +34,12 @@ grid.polyclip <- function(...) {
 }
 
 makeContent.trimgrob <- function(x) {
-    pts <- trim(x$x, x$from, x$to)
+    pts <- trim(x$x, x$from, x$to, x$rep)
     setChildren(x, gList(xyListLine(pts, name=paste0(x$name, ".lines"))))
 }
 
-trimGrob <- function(x, from, to, name=NULL, gp=gpar(), ...) {
-    gTree(x=x, from=from, to=to, trimArgs=list(...),
+trimGrob <- function(x, from, to, rep=FALSE, name=NULL, gp=gpar(), ...) {
+    gTree(x=x, from=from, to=to, rep=rep, trimArgs=list(...),
           gp=gp, name=name, cl="trimgrob")
 }
 

@@ -6,19 +6,19 @@ trim <- function(x, from, to, ...) {
 }
 
 ## Designed for polyclip() results: list of list(x,y)
-trim.default <- function(x, from, to, ...) {
+trim.default <- function(x, from, to, rep=FALSE, ...) {
     if ("x" %in% names(x))
         x <- list(x)
     ## Each trimLine() result is a list of lists
-    unlist(lapply(x, trimLine, from, to), recursive=FALSE)
+    unlist(lapply(x, trimLine, from, to, rep), recursive=FALSE)
 }
 
-trim.grob <- function(x, from, to, ...) {
+trim.grob <- function(x, from, to, rep=FALSE, ...) {
     pts <- grobCoords(x, closed=FALSE)
-    trim(pts, from, to, ...)
+    trim(pts, from, to, rep, ...)
 }
 
-trimLine <- function(line, from, to) {
+trimLine <- function(line, from, to, rep) {
     x <- line$x
     y <- line$y
     dx <- diff(x)
@@ -64,6 +64,18 @@ trimLine <- function(line, from, to) {
         temp <- from[reverse]
         from[reverse] <- to[reverse]
         to[reverse] <- temp
+    }
+    if (rep) {
+        while (max(from) < 1) {
+            maxto <- max(to)
+            from <- c(from, maxto + from)
+            to <- c(to, maxto + to)
+        }
+        ## Trim 'from' to just those within 0 to 1
+        keep <- from <= 1
+        from <- from[keep]
+        ## Trim 'to' to same length as 'from' but cap at 1
+        to <- pmin(to[keep], 1)
     }
     fromLength <- from*totLength
     toLength <- to*totLength

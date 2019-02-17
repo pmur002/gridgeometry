@@ -3,6 +3,8 @@ import("grid")
 
 import("polyclip")
 
+importFrom("grDevices", "dev.cur", "dev.set", "pdf")
+
 export("xyListPath",
        "xyListPolygon",
        "xyListLine",
