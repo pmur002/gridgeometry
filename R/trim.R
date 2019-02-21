@@ -66,11 +66,9 @@ trimLine <- function(line, from, to, rep) {
         to[reverse] <- temp
     }
     if (rep) {
-        while (max(from) < 1) {
-            maxto <- max(to)
-            from <- c(from, maxto + from)
-            to <- c(to, maxto + to)
-        }
+        shift <- seq(0, 1, max(to))
+        from <- as.numeric(outer(from, shift, "+"))
+        to <- as.numeric(outer(to, shift, "+"))
         ## Trim 'from' to just those within 0 to 1
         keep <- from <= 1
         from <- from[keep]
