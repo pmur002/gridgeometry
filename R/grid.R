@@ -8,14 +8,14 @@ makeContent.polyclipgrob <- function(x) {
                              x$polyclipArgs))
     if (length(closedPaths)) {
         children[[1]] <- x$closedFn(closedPaths,
-                                    paste0(x$name, ".closed"))
+                                    name=paste0(x$name, ".closed"))
     }
     openPaths <- do.call(polyclip,
                          c(list(A=x$A, B=x$B, op=x$op, closed=FALSE),
                            x$polyclipArgs))
     if (length(openPaths)) {
         children[[2]] <- x$openFn(openPaths, 
-                                  paste0(x$name, ".open"))
+                                  name=paste0(x$name, ".open"))
     }
     setChildren(x, do.call(gList, children[!is.null(children)]))
 }
