@@ -24,4 +24,6 @@ S3method("trim", "grob")
 S3method("makeContent", "polyclipgrob")
 S3method("makeContent", "trimgrob")
 
-exportMethods("polyclip")
+S3method("polyclip", "default")
+S3method("polyclip", "gList")
+S3method("polyclip", "grob")
