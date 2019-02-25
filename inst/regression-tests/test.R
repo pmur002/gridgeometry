@@ -213,7 +213,21 @@ grid.newpage()
 grid.draw(l)
 grid.draw(t)
 
+## Polyclip and trim on gPath
+grid.newpage()
+grid.rect(.4, .4, .4, .4, gp=gpar(col="red", fill=rgb(0,0,0,.2), lwd=5),
+          name="r1")
+grid.rect(.6, .6, .4, .4, gp=gpar(col="blue", lwd=5), name="r2")
+grid.polyclip("r1", "r2")
+
+grid.newpage()
+grid.xspline(c(.2, .5, .8), c(.5, .3, .5), shape=1,
+             gp=gpar(col=rgb(0,0,0,.2), lwd=c(5, 3)), name="x")
+grid.trim("x", from=unit(1, "cm"), to=c(.5, .8))
+
+
 dev.off()
+
 
 ####################### REGRESSION CHECK #######################################
 

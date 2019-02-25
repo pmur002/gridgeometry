@@ -18,6 +18,18 @@ trim.grob <- function(x, from, to, rep=FALSE, ...) {
     trim(pts, from, to, rep, ...)
 }
 
+trim.gPath <- function(x, from, to, rep=FALSE,
+                       strict=FALSE, grep=FALSE, global=FALSE, ...) {
+    trim(grid.get(x, strict, grep, global),
+         from, to, rep, ...)
+}
+
+trim.character <- function(x, from, to, rep=FALSE,
+                           strict=FALSE, grep=FALSE, global=FALSE, ...) {
+    trim(grid.get(x, strict, grep, global),
+         from, to, rep, ...)
+}
+
 trimLine <- function(line, from, to, rep) {
     x <- line$x
     y <- line$y
