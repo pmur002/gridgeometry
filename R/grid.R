@@ -51,9 +51,7 @@ grid.polyclip.gPath <- function(A, B, ..., name=A$name, gp=NULL,
     oldgrob <- grid.get(A, strict=strict, grep=grep)
     if (is.null(gp)) {
         gp <- oldgrob$gp
-    } else {
-        gp <- gpar()
-    }
+    } 
     newgrob <- forceGrob(polyclipGrob(A, B, ..., name=name, gp=gp,
                                       strict=strict, grep=grep))
     if (name != A$name) {
@@ -95,9 +93,7 @@ grid.trim.gPath <- function(x, ..., name=x$name, gp=NULL,
     oldgrob <- grid.get(x, strict=strict, grep=grep)
     if (is.null(gp)) {
         gp <- oldgrob$gp
-    } else {
-        gp <- gpar()
-    }
+    } 
     newgrob <- forceGrob(trimGrob(x, ..., name=name, gp=gp,
                                   strict=strict, grep=grep))
     if (name != x$name) {
