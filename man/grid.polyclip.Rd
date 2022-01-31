@@ -69,11 +69,11 @@ grid.polyclip(A, B, ...)
   must only consist of closed shapes.
 }
 \value{
-  \code{polygonGrob} returns a gTree with two children, one
+  \code{polyclipGrob} returns a gTree with two children, one
   representing the open shapes within the result and one representing the
   closed shapes within the result.
   
-  \code{grid.polygon} is only used for its side-effect of drawing
+  \code{grid.polyclip} is only used for its side-effect of drawing
   on the current graphics device.
 }
 \author{
