@@ -14,12 +14,16 @@
 }
 \usage{
 polyclip(A, B, ...)
-\method{polyclip}{grob}(A, B, op="intersection", closed=TRUE, ...)
-\method{polyclip}{gList}(A, B, op="intersection", closed=TRUE, ...)
+\method{polyclip}{grob}(A, B, op="intersection", closed=TRUE,
+         collapse = "union", ...)
+\method{polyclip}{gList}(A, B, op="intersection", closed=TRUE,
+         collapse = "union", ...)
 \method{polyclip}{gPath}(A, B, op="intersection", closed=TRUE,
-                         strict=FALSE, grep=FALSE, global=FALSE, ...)
+                         strict=FALSE, grep=FALSE, global=FALSE,
+         collapse = "union", ...)
 \method{polyclip}{character}(A, B, op="intersection", closed=TRUE,
-                             strict=FALSE, grep=FALSE, global=FALSE, ...)
+                             strict=FALSE, grep=FALSE, global=FALSE,
+         collapse = "union", ...)
 }
 \arguments{
   \item{A}{
@@ -44,6 +48,12 @@ polyclip(A, B, ...)
   \item{closed}{
     A logical value indicating whether the \code{A} coordinates describe
     a closed shape or an open shape.
+  }
+  \item{collapse}{
+    A character value describing the operation to be used if either
+    \code{A} or \code{B} need to be collapsed to a single shape.  One of
+    \code{"intersection"}, \code{"minus"}, \code{"union"}, or
+    \code{"xor"}.
   }
   \item{strict, grep, global}{
     Arguments controlling the interpretation of the gPath

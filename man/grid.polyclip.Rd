@@ -11,7 +11,7 @@
 }
 \usage{
 polyclipGrob(A, B, op="intersection",
-             openFn=xyListLine, closedFn=xyListPath,
+             openFn=xyListToLine, closedFn=xyListToPath,
              name=NULL, gp=gpar(),  ...) 
 grid.polyclip(A, B, ...)
 }

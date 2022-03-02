@@ -2,6 +2,9 @@
 \alias{xyListPath}
 \alias{xyListPolygon}
 \alias{xyListLine}
+\alias{xyListToPath}
+\alias{xyListToPolygon}
+\alias{xyListToLine}
 \title{
   Generate Grobs from Coordinates
 }
@@ -10,6 +13,10 @@
   (a list of (x,y) lists).  
 }
 \usage{
+xyListToPath(x, rule="winding", name=NULL, gp=gpar())
+xyListToPolygon(x, name=NULL, gp=gpar())
+xyListToLine(x, name=NULL, gp=gpar()) 
+
 xyListPath(x, rule="winding", name=NULL, gp=gpar())
 xyListPolygon(x, name=NULL, gp=gpar())
 xyListLine(x, name=NULL, gp=gpar()) 
@@ -27,6 +34,10 @@ xyListLine(x, name=NULL, gp=gpar())
   \item{gp}{
     Graphical parameter settings for the resulting grob.
   }
+}
+\details{
+  Following the addition of the \code{\link{xyListFromGrob}} function,
+  the \code{*To*()} forms are preferred.
 }
 \value{
   The result is a grob.  
