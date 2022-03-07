@@ -4,6 +4,8 @@
 
 ## Convert (closed) 'polyclip' polygon result to 'grid' path
 xyListPath <- function(x, rule="winding", name=NULL, gp=gpar()) {
+    ## Remove any coordinate sets that are too short
+    x <- x[sapply(x, function(c) length(c$x) > 1)]
     if (length(x) == 0) {
         nullGrob(name=name)
     } else {
@@ -20,6 +22,8 @@ xyListToPath <- xyListPath
 
 ## Convert (closed) 'polyclip' polygon result to 'grid' polygons
 xyListPolygon <- function(x, name=NULL, gp=gpar()) {
+    ## Remove any coordinate sets that are too short
+    x <- x[sapply(x, function(c) length(c$x) > 1)]
     if (length(x) == 0) {
         nullGrob(name=name)
     } else {
@@ -67,33 +71,43 @@ xyListFromCoords <- function(x, op, closed, ...) {
     UseMethod("xyListFromCoords")
 }
 
-xyListFromCoords.GridGrobCoords <- function(x, op = "union", closed = TRUE,
-                                            ...) {
-    if (numShapes(x) == 1) {
-        x
+xyListFromCoords.GridGrobCoords <- function(x, op = "union",
+                                            closed = TRUE, ...) {
+    if (op == "flatten") {
+        attr(x, "name") <- NULL
+        unclass(unname(x))
     } else {
-        names <- names(x)
-        unames <- sort(unique(names))
-        n <- length(unames)
-        A <- x[names == unames[1]]
-        B <- x[names == unames[2]]
-        coords <- polyclip(A, B, op, closed, ...)
-        if (n > 2) {
-            for (i in 3:n) {
-                A <- coords
-                B <- x[names == unames[i]]
-                coords <- polyclip(A, B, op, closed, ...)
+        if (numShapes(x) == 1) {
+            x
+        } else {
+            names <- names(x)
+            unames <- sort(unique(names))
+            n <- length(unames)
+            A <- x[names == unames[1]]
+            B <- x[names == unames[2]]
+            coords <- polyclip(A, B, op, closed, ...)
+            if (n > 2) {
+                for (i in 3:n) {
+                    A <- coords
+                    B <- x[names == unames[i]]
+                    coords <- polyclip(A, B, op, closed, ...)
+                }
             }
+            coords
         }
-        coords
     }
 }
 
-xyListFromCoords.GridGTreeCoords <- function(x, op = "union", closed = TRUE,
-                                             ...) {
-    childCoords <- lapply(x, xyListFromCoords, op, closed, ...)
-    Reduce(function(A, B) polyclip(A, B, op, closed, ...),
-           childCoords)
+xyListFromCoords.GridGTreeCoords <- function(x, op = "union",
+                                             closed = TRUE, ...) {
+    if (op == "flatten") {
+        childCoords <- lapply(x, xyListFromCoords, closed, ...)
+        do.call(c, childCoords)
+    } else {
+        childCoords <- lapply(x, xyListFromCoords, op, closed, ...)
+        Reduce(function(A, B) polyclip(A, B, op, closed, ...),
+               childCoords)
+    }
 }
 
 xyListFromGrob <- function(x, op = "union", closed = TRUE, ...) {
