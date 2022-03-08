@@ -24,7 +24,8 @@ export("xyListPath",
 
 
 S3method("trim", "character")
-S3method("trim", "default")
+S3method("trim", "GridGrobCoords")
+S3method("trim", "GridGTreeCoords")
 S3method("trim", "grob")
 S3method("trim", "gPath")
          

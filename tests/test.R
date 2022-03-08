@@ -116,3 +116,71 @@ rects <- pathGrob(c(.3, .3, .7, .7, .4, .4, .6, .6),
                   rule="evenodd")
 grid.polyclip(circle, rects, "minus", fillB = "nonzero",
               gp=gpar(fill="grey"))
+
+################################################################################
+## trim()
+
+library(gridGeometry)
+
+l <- bezierGrob(c(.2, .4, .6, .8),
+                c(.2, .8, .8, .2),
+                gp=gpar(col="grey", lwd=5))
+
+## trim single line, single result
+grid.newpage()
+grid.draw(l)
+grid.trim(l, .2, .8, gp=gpar(lwd=5))
+
+## trim single line (negative 'to'), single result
+grid.newpage()
+grid.draw(l)
+grid.trim(l, .2, -.1, gp=gpar(lwd=5))
+
+## trim single line (unit from/to), single result
+grid.newpage()
+grid.draw(l)
+grid.trim(l, unit(5, "mm"), unit(-1, "in"), gp=gpar(lwd=5))
+
+## trim single line ("npc" 'to'), single result
+grid.newpage()
+grid.draw(l)
+grid.trim(l, .2, unit(.5, "npc") + unit(5, "mm"), gp=gpar(lwd=5))
+
+## trim single line (vector from/to), multiple results
+grid.newpage()
+grid.draw(l)
+grid.trim(l, c(.2, .6), c(.4, .8), gp=gpar(lwd=5))
+
+## trim single line (rep=TRUE), multiple results
+grid.newpage()
+grid.draw(l)
+grid.trim(l, .1, .2, rep=TRUE, gp=gpar(lwd=5))
+
+## raw trim() (instead of grid.trim())
+grid.newpage()
+xg <- xsplineGrob(c(.2, .5, .8), c(.2, .8, .2), shape=-1)
+xcoords <- trim(xg, from=0:1/2, to=1:2/2)
+grid.lines(xcoords[[1]]$x, xcoords[[1]]$y, default.units="in",
+           gp=gpar(lwd=3, lineend="butt"))
+grid.lines(xcoords[[2]]$x, xcoords[[2]]$y, default.units="in",
+           gp=gpar(lwd=10, lineend="butt"))
+
+## trim grob with multiple shapes
+l <- segmentsGrob(c(.2, .4), .2, c(.6, .8), .8,
+                  gp=gpar(lwd=5, col="grey"))
+grid.newpage()
+grid.draw(l)
+grid.trim(l, .2, .8, gp=gpar(lwd=5))
+
+## trim gTree
+gt <- gTree(children=gList(l,
+                           circleGrob(),
+                           gTree(children=gList(linesGrob(c(.2, .2, .4),
+                                                          c(.6, .8, .8)),
+                                                linesGrob(c(.6, .8, .8),
+                                                          c(.2, .2, .4))))),
+            gp=gpar(lwd=5, col="grey"))
+grid.newpage()
+grid.draw(gt)
+grid.trim(gt, .2, .8, gp=gpar(lwd=5))
+

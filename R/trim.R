@@ -5,12 +5,14 @@ trim <- function(x, from, to, ...) {
     UseMethod("trim")
 }
 
-## Designed for polyclip() results: list of list(x,y)
-trim.default <- function(x, from, to, rep=FALSE, ...) {
-    if ("x" %in% names(x))
-        x <- list(x)
+trim.GridGrobCoords <- function(x, from, to, rep=FALSE, ...) {
     ## Each trimLine() result is a list of lists
     unlist(lapply(x, trimLine, from, to, rep), recursive=FALSE)
+}
+
+trim.GridGTreeCoords <- function(x, from, to, rep=FALSE, ...) {
+    childCoords <- lapply(x, trim, from, to, rep=FALSE, ...)
+    do.call(c, childCoords)
 }
 
 trim.grob <- function(x, from, to, rep=FALSE, ...) {
