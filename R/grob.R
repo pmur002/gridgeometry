@@ -67,14 +67,14 @@ numShapes <- function(coords) {
     }
 }
 
-xyListFromCoords <- function(x, op, closed, ...) {
+xyListFromCoords <- function(x, op, closed, rule, ...) {
     UseMethod("xyListFromCoords")
 }
 
-xyListFromCoords.GridGrobCoords <- function(x, op = "union",
-                                            closed = TRUE, ...) {
+xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
     if (op == "flatten") {
         attr(x, "name") <- NULL
+        attr(x, "rule") <- NULL
         unclass(unname(x))
     } else {
         if (numShapes(x) == 1) {
@@ -85,32 +85,48 @@ xyListFromCoords.GridGrobCoords <- function(x, op = "union",
             n <- length(unames)
             A <- x[names == unames[1]]
             B <- x[names == unames[2]]
-            coords <- polyclip(A, B, op, closed, ...)
+            fillrule <- convertRule(rule)
+            coords <- polyclip::polyclip(A, B, op, closed,
+                                         fillA = fillrule,
+                                         fillB = fillrule,
+                                         ...)
             if (n > 2) {
                 for (i in 3:n) {
                     A <- coords
                     B <- x[names == unames[i]]
-                    coords <- polyclip(A, B, op, closed, ...)
+                    coords <- polyclip::polyclip(A, B, op, closed,
+                                                 fillA = fillrule,
+                                                 fillB = fillrule,
+                                                 ...)
                 }
             }
+            ## attr(coords, "rule") <- NULL
             coords
         }
     }
 }
 
-xyListFromCoords.GridGTreeCoords <- function(x, op = "union",
-                                             closed = TRUE, ...) {
+xyListFromCoords.GridGTreeCoords <- function(x, op, closed, rule, ...) {
     if (op == "flatten") {
-        childCoords <- lapply(x, xyListFromCoords, closed, ...)
-        do.call(c, childCoords)
+        childCoords <- lapply(x, xyListFromCoords, closed, rule, ...)
+        coords <- do.call(c, childCoords)
+        attr(coords, "rule") <- NULL
     } else {
-        childCoords <- lapply(x, xyListFromCoords, op, closed, ...)
-        Reduce(function(A, B) polyclip(A, B, op, closed, ...),
-               childCoords)
+        childCoords <- lapply(x, xyListFromCoords, op, closed, rule, ...)
+        fillrule <- convertRule(rule)
+        coords <- Reduce(function(A, B) polyclip::polyclip(A, B, op, closed,
+                                                           fillA = fillrule,
+                                                           fillB = fillrule,
+                                                           ...),
+                         childCoords)
+        attr(coords, "rule") <- rule
     }
+    coords
 }
 
 xyListFromGrob <- function(x, op = "union", closed = TRUE, ...) {
-    xyListFromCoords(grobCoords(x, closed), op, closed, ...)
+    coords <- grobCoords(x, closed)
+    rule <- attr(coords, "rule")
+    xyListFromCoords(coords, op, closed, rule, ...)
 }
 

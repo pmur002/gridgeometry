@@ -54,3 +54,65 @@ grid.newpage()
 grid.draw(circle)
 grid.draw(lines)
 grid.polyclip(lines, circle, "minus", gp=gpar(lwd=5))
+
+################################################################################
+## fillA and fillB
+
+## Default fillB is "nonzero"
+## Path is TWO shapes (each with rule "winding", which is irrelevant)
+## Outer clockwise, inner anticlockwise
+## Path is flattened to two sets of coordinates
+## Inner rect creates hole in outer rect
+## (because default fillB of NULL defaults to "winding"/"nonzero")
+## (and [flattened] path has no rule)
+grid.newpage()
+circle <- circleGrob(r=.4)
+rects <- pathGrob(c(.3, .3, .7, .7, .6, .6, .4, .4),
+                  c(.3, .7, .7, .3, .4, .6, .6, .4),
+                  pathId=rep(1:2, each=4))
+grid.polyclip(circle, rects, "minus", reduceB = "flatten",
+              gp=gpar(fill="grey"))
+
+## Take fillB from grob (path)
+## Path is ONE shape with two parts and rule "evenodd"
+## Outer clockwise, inner clockwise
+## Path generates two sets of coordinates
+## Inner rect creates hole in outer rect
+## (because path rule is "evenodd")
+grid.newpage()
+circle <- circleGrob(r=.4)
+rects <- pathGrob(c(.3, .3, .7, .7, .4, .4, .6, .6),
+                  c(.3, .7, .7, .3, .4, .6, .6, .4),
+                  id=rep(1:2, each=4),
+                  rule="evenodd")
+grid.polyclip(circle, rects, "minus", 
+              gp=gpar(fill="grey"))
+
+## Take fillB from grob (path)
+## Path is ONE shape with two parts and rule "winding"
+## Outer clockwise, inner clockwise
+## Path generates two sets of coordinates
+## Inner rect DOES NOT create hole in outer rect
+## (because path rule is "winding"/"evenodd")
+grid.newpage()
+circle <- circleGrob(r=.4)
+rects <- pathGrob(c(.3, .3, .7, .7, .4, .4, .6, .6),
+                  c(.3, .7, .7, .3, .4, .6, .6, .4),
+                  id=rep(1:2, each=4))
+grid.polyclip(circle, rects, "minus", 
+              gp=gpar(fill="grey"))
+
+## Override rule from grob (path)
+## Path is ONE shape with two parts and rule "evenodd"
+## Outer clockwise, inner clockwise
+## Path generates two sets of coordinates
+## Inner rect DOES NOT create hole in outer rect
+## (because fillB rule of "winding"/"evenodd" overrules path rule of "evenodd")
+grid.newpage()
+circle <- circleGrob(r=.4)
+rects <- pathGrob(c(.3, .3, .7, .7, .4, .4, .6, .6),
+                  c(.3, .7, .7, .3, .4, .6, .6, .4),
+                  id=rep(1:2, each=4),
+                  rule="evenodd")
+grid.polyclip(circle, rects, "minus", fillB = "nonzero",
+              gp=gpar(fill="grey"))
