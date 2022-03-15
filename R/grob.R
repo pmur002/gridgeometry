@@ -108,7 +108,7 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
 
 xyListFromCoords.GridGTreeCoords <- function(x, op, closed, rule, ...) {
     if (op == "flatten") {
-        childCoords <- lapply(x, xyListFromCoords, closed, rule, ...)
+        childCoords <- lapply(x, xyListFromCoords, op, closed, rule, ...)
         coords <- do.call(c, childCoords)
         attr(coords, "rule") <- NULL
     } else {
@@ -125,8 +125,13 @@ xyListFromCoords.GridGTreeCoords <- function(x, op, closed, rule, ...) {
 }
 
 xyListFromGrob <- function(x, op = "union", closed = TRUE, ...) {
-    coords <- grobCoords(x, closed)
-    rule <- attr(coords, "rule")
-    xyListFromCoords(coords, op, closed, rule, ...)
+    if (getRversion() < "4.2.0") {
+        ## grobCoords() result became more complex in R 4.2.0
+        grobCoords(x, closed)
+    } else {
+        coords <- grobCoords(x, closed)
+        rule <- attr(coords, "rule")
+        xyListFromCoords(coords, op, closed, rule, ...)
+    }
 }
 

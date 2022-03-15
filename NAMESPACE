@@ -23,6 +23,7 @@ export("xyListPath",
        "trimGrob")
 
 
+S3method("trim", "default")
 S3method("trim", "character")
 S3method("trim", "GridGrobCoords")
 S3method("trim", "GridGTreeCoords")

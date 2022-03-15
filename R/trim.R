@@ -5,6 +5,13 @@ trim <- function(x, from, to, ...) {
     UseMethod("trim")
 }
 
+## Designed for polyclip() results: list of list(x,y)
+trim.default <- function(x, from, to, rep=FALSE, ...) {
+    if ("x" %in% names(x))
+        x <- list(x)
+    unlist(lapply(x, trimLine, from, to, rep), recursive=FALSE)
+}
+    
 trim.GridGrobCoords <- function(x, from, to, rep=FALSE, ...) {
     ## Each trimLine() result is a list of lists
     unlist(lapply(x, trimLine, from, to, rep), recursive=FALSE)

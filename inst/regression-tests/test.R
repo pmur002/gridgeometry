@@ -112,6 +112,7 @@ g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
 p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  reduceA="flatten", fillA="evenodd",
                   gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
@@ -124,6 +125,7 @@ g2 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
                            circleGrob(r=.25)),
             gp=gpar(col="blue"))
 p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  reduceB="flatten", fillB="evenodd",
                   gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
@@ -137,6 +139,7 @@ g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5),
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
 p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  reduceA="flatten", fillA="evenodd",
                   gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
@@ -150,6 +153,7 @@ g1 <- gTree(childrenvp=viewport(angle=45, name="vp"),
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
 p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  reduceA="flatten", fillA="evenodd",
                   gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
@@ -164,6 +168,7 @@ g1 <- gTree(children=gList(roundrectGrob(width=.5, height=.5,
             gp=gpar(col="red"))
 g2 <- circleGrob(.75, .75, .15, gp=gpar(col="blue"))
 p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  reduceA="flatten", fillA="evenodd",
                   gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.draw(g1)
 grid.draw(g2)
@@ -174,6 +179,7 @@ require(lattice)
 g1 <- grid.grabExpr(expression(print(histogram(~ disp, mtcars))))
 g2 <- circleGrob()
 p <- polyclipGrob(g1, g2, name="p", op="minus",
+                  reduceA="flatten", fillA="evenodd",
                   gp=gpar(col=rgb(0,0,0,.5), lwd=5))
 grid.newpage()
 grid.draw(g1)
