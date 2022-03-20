@@ -71,6 +71,8 @@ xyListFromCoords <- function(x, op, closed, rule, ...) {
     UseMethod("xyListFromCoords")
 }
 
+emptyXYlist <- list(list(x = 0, y = 0))
+
 xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
     if (op == "flatten") {
         attr(x, "name") <- NULL
@@ -90,6 +92,10 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
                                          fillA = fillrule,
                                          fillB = fillrule,
                                          ...)
+            ## Convert polyclip::polyclip() list() result to "emptyCoords".
+            ## We try not to feed polyclip::polyclip() a list() as input.
+            if (!length(coords))
+                coords <- emptyXYlist
             if (n > 2) {
                 for (i in 3:n) {
                     A <- coords
@@ -98,6 +104,8 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
                                                  fillA = fillrule,
                                                  fillB = fillrule,
                                                  ...)
+                    if (!length(coords))
+                        coords <- emptyXYlist
                 }
             }
             ## attr(coords, "rule") <- NULL
@@ -114,10 +122,16 @@ xyListFromCoords.GridGTreeCoords <- function(x, op, closed, rule, ...) {
     } else {
         childCoords <- lapply(x, xyListFromCoords, op, closed, rule, ...)
         fillrule <- convertRule(rule)
-        coords <- Reduce(function(A, B) polyclip::polyclip(A, B, op, closed,
-                                                           fillA = fillrule,
-                                                           fillB = fillrule,
-                                                           ...),
+        coords <- Reduce(function(A, B) {
+                             coords <- polyclip::polyclip(A, B, op, closed,
+                                                          fillA = fillrule,
+                                                          fillB = fillrule,
+                                                          ...)
+                             if (!length(coords))
+                                 emptyXYlist
+                             else
+                                 coords
+                         },
                          childCoords)
         attr(coords, "rule") <- rule
     }
