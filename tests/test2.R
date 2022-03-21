@@ -1,0 +1,5 @@
+library(gridGeometry, lib.loc = "D:/Stats781/library")
+x = list()
+emptyGrob1 = xyListPath(x)
+emptyGrob2 = xyListLine(x)
+emptyGrob3 = xyListPolygon(x)

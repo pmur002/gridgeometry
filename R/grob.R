@@ -3,7 +3,7 @@
 
 ## Convert (closed) 'polyclip' polygon result to 'grid' path
 xyListPath <- function(x, rule="winding", name=NULL, gp=gpar()) {
-    if (isEmptyCoords(x)) {
+    if (isEmptyCoords(x) || length(x) == 0) {
         nullGrob(name=name)
     } else {
         xx <- unlist(lapply(x, "[[", "x"))
@@ -17,7 +17,7 @@ xyListPath <- function(x, rule="winding", name=NULL, gp=gpar()) {
 
 ## Convert (closed) 'polyclip' polygon result to 'grid' polygons
 xyListPolygon <- function(x, name=NULL, gp=gpar()) {
-    if (isEmptyCoords(x)) {
+    if (isEmptyCoords(x) || length(x) == 0) {
         nullGrob(name=name)
     } else {
         xx <- unlist(lapply(x, "[[", "x"))
@@ -31,7 +31,7 @@ xyListPolygon <- function(x, name=NULL, gp=gpar()) {
 
 ## Convert (open) 'polyclip' polygon result to 'grid' polyline
 xyListLine <- function(x, name=NULL, gp=gpar()) {
-    if (isEmptyCoords(x)) {
+    if (isEmptyCoords(x) || length(x) == 0) {
         nullGrob(name=name)
     } else {
         xx <- unlist(lapply(x, "[[", "x"))
