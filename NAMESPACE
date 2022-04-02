@@ -41,3 +41,7 @@ S3method("grid.polyclip", "gPath")
 S3method("grid.trim", "character")
 S3method("grid.trim", "default")
 S3method("grid.trim", "gPath")
+
+S3method("grid.polyoffset", "default")
+
+S3method("grid.polylineoffset", "default")
