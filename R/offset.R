@@ -1,13 +1,33 @@
-grid.polyoffset <- function(A, delta, ..., eps, x0, y0, miterlim = 2, arctol = abs(delta) / 100, jointype = c("square", "round", "miter"))
+polylineoffsetGrob <- function(A, delta, ...)
 {
-  polyA <- grobCoords(A, closed = TRUE)
-  coords <- polyclip::polyoffset(polyA, delta = delta, ..., eps = eps, x0 = x0, y0 = y0, miterlim = miterlim, arctol = arctol, jointype = jointype)
+  polyA <- grobCoords(A, closed = F)
+  coords <- polyclip::polylineoffset(polyA, delta = delta, ...)
   return (xyListPolygon(coords))
 }
 
-grid.polylineoffset <- function(A, delta, ..., eps, x0, y0, miterlim = 2, arctol = abs(delta) / 100, jointype = c("square", "round", "miter"), endtype = c("closedpolygon", "closedline", "openbutt", "opensquare", "openround", "closed", "butt", "square", "round"))
+polyoffsetGrob <- function(A, delta, ...)
 {
-  polyA <- grobCoords(A, closed = F)
-  coords <- polyclip::polylineoffset(polyA, delta = delta, ..., eps = eps, x0 = x0, y0 = y0, miterlim = miterlim, arctol = arctol, jointype = jointype, endtype = endtype)
+  polyA <- grobCoords(A, closed = TRUE)
+  coords <- polyclip::polyoffset(polyA, delta = delta, ...)
   return (xyListPolygon(coords))
+}
+
+grid.polylineoffset <- function(A, delta, ...)
+{
+  UseMethod("grid.polylineoffset")
+}
+
+grid.polylineoffset.default <- function(A, delta, ...)
+{
+  grid.draw(polylineoffsetGrob(A, delta, ...))
+}
+
+grid.polyoffset <- function(A, delta, ...)
+{
+  UseMethod("grid.polyoffset")
+}
+
+grid.polyoffset.default <- function(A, delta, ...)
+{
+  grid.draw(polyoffsetGrob(A, delta, ...))
 }
