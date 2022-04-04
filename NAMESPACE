@@ -27,6 +27,8 @@ S3method("trim", "gPath")
          
 S3method("makeContent", "polyclipgrob")
 S3method("makeContent", "trimgrob")
+S3method("makeContent", "polylineoffsetGrob")
+S3method("makeContent", "polyoffsetGrob")
 
 S3method("polyclip", "character")
 S3method("polyclip", "default")

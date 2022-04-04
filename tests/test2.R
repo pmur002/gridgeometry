@@ -15,6 +15,7 @@ linePath = list(list(x = c(2, 4, 4, 2), y = c(2, 2, 4, 4) - 1.5))
 grobPath <- xyListLine(linePath)
 grid.polylineoffset(grobPath,0.1, jointype="square", endtype = "opensquare") # Not working because it is a path. Any solution?
 grid.draw(grobPath)
+grid.draw(polylineGrob(x = c(1.9, 4.1), y = c(2.5, 2.5), default.units = "in")) #Test the delta unit type. It is inch.
 
 grid.newpage()
 grob <- polylineGrob(x = c(2, 4, 4, 2), y = c(0.5, 0.5, 2.5, 2.5), default.units = "in")
@@ -34,3 +35,12 @@ grid.newpage()
 grob <- polygonGrob(x = c(.4, .8, .8, .2, .6), y = c(.3, .3, .8, .8, .6))
 grid.polyoffset(grob, 0.25, jointype = "round")
 grid.draw(grob)
+
+#Test the offset shift
+grid.newpage()
+grob <- polylineGrob(x = c(2, 4, 4, 2), y = c(0.5, 0.5, 2.5, 2.5), default.units = "in")
+r <- polylineoffsetGrob(A = grob, delta = 0.1, jointype = "square", endtype = "opensquare")
+pushViewport(viewport(x=.75, y=.75, width=.5, height=.5))
+grid.draw(r)
+popViewport()
+
