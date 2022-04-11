@@ -39,8 +39,12 @@ grid.polyoffset.default <- function(A, delta, ...)
 makeContent.polylineoffsetGrob <- function(x)
 {
   polyA <- grobCoords(x$A, closed = F)
-  delta <- unit(x$delta, "inch")
-  delta <- convertUnit(delta, "inches")
+  delta = x$delta
+  if (!is.unit(x$delta))
+  {
+    delta <- unit(x$delta, "npc")
+  }
+  delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
   coords <- do.call(polyclip::polylineoffset, c(list(A = polyA, delta = delta), x$polylineoffsetArgs))
   grob <- xyListPolygon(coords)
   if (length(coords) == 0){
@@ -52,8 +56,12 @@ makeContent.polylineoffsetGrob <- function(x)
 makeContent.polyoffsetGrob <- function(x)
 {
   polyA <- grobCoords(x$A, closed = T)
-  delta <- unit(x$delta, "inch")
-  delta <- convertUnit(delta, "inches")
+  delta = x$delta
+  if (!is.unit(x$delta))
+  {
+    delta <- unit(x$delta, "npc")
+  }
+  delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
   coords <- do.call(polyclip::polyoffset, c(list(A = polyA, delta = delta), x$polyoffsetArgs))
   grob <- xyListPolygon(coords)
   if (length(coords) == 0){

@@ -52,7 +52,7 @@ grid.draw(grob)
 
 grid.newpage()
 grob <- linesGrob(x = c(.4, .8, .8, .2, .6), y = c(.3, .3, .8, .8, .6))
-grid.polylineoffset(grob, unit(0.1, "cm"), jointype="square", endtype = "opensquare")
+grid.polylineoffset(grob, unit(0.25, "inch"), jointype="square", endtype = "opensquare")
 grid.draw(grob)
 
 #Test generic polylineoffset
