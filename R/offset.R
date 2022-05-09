@@ -64,6 +64,34 @@ grid.polyoffset.grob <- function(A, delta, ...)
   return (g)
 }
 
+grid.polyoffset.list <- function(A, delta, ...)
+{
+  g <- polyoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polyoffset.gList <- function(A, delta, ...)
+{
+  g <- polyoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polyoffset.gPath <- function(A, delta, ...)
+{
+  g <- polyoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polyoffset.character <- function(A, delta, ...)
+{
+  g <- polyoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
 makeContent.polylineoffsetGrob <- function(x)
 {
   coords <- polylineoffset(x$A, x$delta, x$polylineoffsetArgs)
@@ -142,13 +170,7 @@ polyoffset.grob <- function(A, delta, ...)
     stop("Empty coords grob object.")
   }
   polyA <- grobCoords(A, closed = T)
-  delta = delta
-  if (!is.unit(delta))
-  {
-    delta <- unit(delta, "npc")
-  }
-  delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
-  coords <- do.call(polyclip::polyoffset, c(list(A = polyA, delta = delta), ...))
+  coords <- polyoffset(polyA, delta, ...)
 }
 
 polyoffset.gList <- function(A, delta, ...)
@@ -158,13 +180,7 @@ polyoffset.gList <- function(A, delta, ...)
     stop("Empty coords grob object.")
   }
   polyA <- grobCoords(A, closed = T)
-  delta = delta
-  if (!is.unit(delta))
-  {
-    delta <- unit(delta, "npc")
-  }
-  delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
-  coords <- do.call(polyclip::polyoffset, c(list(A = polyA, delta = delta), ...))
+  coords <- polyoffset(polyA, delta, ...)
 }
 
 polyoffset.list <- function(A, delta, ...)
@@ -173,6 +189,12 @@ polyoffset.list <- function(A, delta, ...)
   {
     stop("Empty coordinate.")
   }
+  delta = delta
+  if (!is.unit(delta))
+  {
+    delta <- unit(delta, "npc")
+  }
+  delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
   coords <- do.call(polyclip::polyoffset, c(list(A = A, delta = delta), ...))
 }
 
