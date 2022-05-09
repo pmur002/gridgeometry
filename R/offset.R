@@ -86,6 +86,12 @@ polylineoffset.character <- function(A, delta, strict=FALSE, grep=FALSE, global=
   coords <- polylineoffset(polyA, delta, ...)
 }
 
+polylineoffset.gPath <- function(A, delta, strict=FALSE, grep=FALSE, global=FALSE, ...)
+{
+  polyA <- grobCoords(grid.get(A, strict, grep, global), closed = F)
+  coords <- polylineoffset(polyA, delta, ...)
+}
+
 polyoffset <- function(A, delta, ...)
 {
   UseMethod("polyoffset")
@@ -117,6 +123,12 @@ polyoffset.list <- function(A, delta, ...)
 }
 
 polyoffset.character <- function(A, delta, strict=FALSE, grep=FALSE, global=FALSE, ...)
+{
+  polyA <- grobCoords(grid.get(A, strict, grep, global), closed = T)
+  coords <- polyoffset(polyA, delta, ...)
+}
+
+polyoffset.gPath <- function(A, delta, strict=FALSE, grep=FALSE, global=FALSE, ...)
 {
   polyA <- grobCoords(grid.get(A, strict, grep, global), closed = T)
   coords <- polyoffset(polyA, delta, ...)

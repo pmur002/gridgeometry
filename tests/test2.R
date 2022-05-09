@@ -103,3 +103,24 @@ grob <- circleGrob(r = 0.25, gp = gpar(col = "blue", lwd = 3))
 offset <- polyoffsetGrob(grob, delta = 0.1, gp = gpar(fill = "blue"))
 grid.draw(offset)
 grid.draw(grob)
+
+#Create donut shape using polyline offset instead
+grid.newpage();
+grob <- circleGrob(r = 0.25, gp = gpar(col = "blue", lwd = 3))
+offset <- polylineoffsetGrob(xyListLine(grobCoords(grob, closed = T)), delta = 0.1, jointype="round", endtype = "openround", gp = gpar(col = "red", lwd = 3))
+grid.draw(offset)
+
+#Test low level polyoffset.gPath
+grid.newpage()
+grob <- rectGrob(width = 0.5, height = 0.5, name = "Rect 1")
+grid.draw(grob)
+offset <- polyoffsetGrob(gPath("Rect 1"), delta = unit(0.1, "cm"), jointype="square", endtype = "opensquare")
+grid.draw(offset)
+
+#Test low level polylineoffset.gPath
+grid.newpage()
+grob <- linesGrob(x = c(.4, .8, .8, .2, .6), y = c(.3, .3, .8, .8, .6), name = "Line 1")
+grid.draw(grob)
+offset <- polylineoffset("Line 1", delta = unit(0.1, "cm"), jointype="square", endtype = "opensquare")
+grid.draw(xyListPolygon(offset))
+grid.draw(grob)
