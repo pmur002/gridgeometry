@@ -24,68 +24,12 @@ grid.polylineoffset.default <- function(A, delta, ...)
   return (g)
 }
 
-grid.polylineoffset.grob <- function(A, delta, ...)
-{
-  g <- polylineoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
-grid.polylineoffset.list <- function(A, delta, ...)
-{
-  g <- polylineoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
-grid.polylineoffset.character <- function(A, delta, ...)
-{
-  g <- polylineoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
 grid.polyoffset <- function(A, delta, ...)
 {
   UseMethod("grid.polyoffset")
 }
 
 grid.polyoffset.default <- function(A, delta, ...)
-{
-  g <- polyoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
-grid.polyoffset.grob <- function(A, delta, ...)
-{
-  g <- polyoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
-grid.polyoffset.list <- function(A, delta, ...)
-{
-  g <- polyoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
-grid.polyoffset.gList <- function(A, delta, ...)
-{
-  g <- polyoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
-grid.polyoffset.gPath <- function(A, delta, ...)
-{
-  g <- polyoffsetGrob(A, delta, ...)
-  grid.draw(g)
-  return (g)
-}
-
-grid.polyoffset.character <- function(A, delta, ...)
 {
   g <- polyoffsetGrob(A, delta, ...)
   grid.draw(g)
