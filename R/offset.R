@@ -24,12 +24,40 @@ grid.polylineoffset.default <- function(A, delta, ...)
   return (g)
 }
 
+grid.polylineoffset.grob <- function(A, delta, ...)
+{
+  g <- polylineoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polylineoffset.list <- function(A, delta, ...)
+{
+  g <- polylineoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polylineoffset.character <- function(A, delta, ...)
+{
+  g <- polylineoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
 grid.polyoffset <- function(A, delta, ...)
 {
   UseMethod("grid.polyoffset")
 }
 
 grid.polyoffset.default <- function(A, delta, ...)
+{
+  g <- polyoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polyoffset.grob <- function(A, delta, ...)
 {
   g <- polyoffsetGrob(A, delta, ...)
   grid.draw(g)
@@ -65,6 +93,16 @@ polylineoffset.grob <- function(A, delta, ...)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
+polylineoffset.gList <- function(A, delta, ...)
+{
+  if (isEmptyCoords(A))
+  {
+    stop("Empty coords grob object.")
+  }
+  polyA <- grobCoords(A, closed = F)
+  coords <- polylineoffset(polyA, delta, ...)
+}
+
 polylineoffset.list <- function(A, delta, ...)
 {
   if (length(A) == 0)
@@ -80,13 +118,13 @@ polylineoffset.list <- function(A, delta, ...)
   coords <- do.call(polyclip::polylineoffset, c(list(A = A, delta = delta), ...))
 }
 
-polylineoffset.character <- function(A, delta, strict=FALSE, grep=FALSE, global=FALSE, ...)
+polylineoffset.character <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- grobCoords(grid.get(A, strict, grep, global), closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
-polylineoffset.gPath <- function(A, delta, strict=FALSE, grep=FALSE, global=FALSE, ...)
+polylineoffset.gPath <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- grobCoords(grid.get(A, strict, grep, global), closed = F)
   coords <- polylineoffset(polyA, delta, ...)
@@ -113,6 +151,22 @@ polyoffset.grob <- function(A, delta, ...)
   coords <- do.call(polyclip::polyoffset, c(list(A = polyA, delta = delta), ...))
 }
 
+polyoffset.gList <- function(A, delta, ...)
+{
+  if (isEmptyCoords(A))
+  {
+    stop("Empty coords grob object.")
+  }
+  polyA <- grobCoords(A, closed = T)
+  delta = delta
+  if (!is.unit(delta))
+  {
+    delta <- unit(delta, "npc")
+  }
+  delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
+  coords <- do.call(polyclip::polyoffset, c(list(A = polyA, delta = delta), ...))
+}
+
 polyoffset.list <- function(A, delta, ...)
 {
   if (length(A) == 0)
@@ -122,13 +176,13 @@ polyoffset.list <- function(A, delta, ...)
   coords <- do.call(polyclip::polyoffset, c(list(A = A, delta = delta), ...))
 }
 
-polyoffset.character <- function(A, delta, strict=FALSE, grep=FALSE, global=FALSE, ...)
+polyoffset.character <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- grobCoords(grid.get(A, strict, grep, global), closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
-polyoffset.gPath <- function(A, delta, strict=FALSE, grep=FALSE, global=FALSE, ...)
+polyoffset.gPath <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- grobCoords(grid.get(A, strict, grep, global), closed = T)
   coords <- polyoffset(polyA, delta, ...)
