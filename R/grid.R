@@ -26,7 +26,7 @@ grobArg <- function(x) {
 }
 
 polyclipGrob <- function(A, B, op="intersection",
-                         openFn=xyListLine, closedFn=xyListPath,
+                         openFn=xyListToLine, closedFn=xyListToPath,
                          name=NULL, gp=gpar(),
                          ...) {
     if (!(grobArg(A) && grobArg(B)))
@@ -68,7 +68,7 @@ grid.polyclip.character <- function(A, B, ...) {
 makeContent.trimgrob <- function(x) {
     pts <- do.call(trim,
                    c(list(x$x, x$from, x$to, x$rep), x$trimArgs))
-    setChildren(x, gList(xyListLine(pts, name=paste0(x$name, ".lines"))))
+    setChildren(x, gList(xyListToLine(pts, name=paste0(x$name, ".lines"))))
 }
 
 trimGrob <- function(x, from, to, rep=FALSE, name=NULL, gp=gpar(), ...) {

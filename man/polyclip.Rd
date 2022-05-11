@@ -14,12 +14,28 @@
 }
 \usage{
 polyclip(A, B, ...)
-\method{polyclip}{grob}(A, B, op="intersection", closed=TRUE, ...)
-\method{polyclip}{gList}(A, B, op="intersection", closed=TRUE, ...)
+\method{polyclip}{grob}(A, B, op="intersection", closed=TRUE,
+         reduceA = if (closed) "union" else "flatten",
+         reduceB = "union",
+         fillA = NULL, fillB = NULL,
+         ...)
+\method{polyclip}{gList}(A, B, op="intersection", closed=TRUE,
+         reduceA = if (closed) "union" else "flatten",
+         reduceB = "union",
+         fillA = NULL, fillB = NULL,
+         ...)
 \method{polyclip}{gPath}(A, B, op="intersection", closed=TRUE,
-                         strict=FALSE, grep=FALSE, global=FALSE, ...)
+                         strict=FALSE, grep=FALSE, global=FALSE,
+         reduceA = if (closed) "union" else "flatten",
+         reduceB = "union",
+         fillA = NULL, fillB = NULL,
+         ...)
 \method{polyclip}{character}(A, B, op="intersection", closed=TRUE,
-                             strict=FALSE, grep=FALSE, global=FALSE, ...)
+                             strict=FALSE, grep=FALSE, global=FALSE,
+         reduceA = if (closed) "union" else "flatten",
+         reduceB = "union",
+         fillA = NULL, fillB = NULL,
+         ...)
 }
 \arguments{
   \item{A}{
@@ -44,6 +60,22 @@ polyclip(A, B, ...)
   \item{closed}{
     A logical value indicating whether the \code{A} coordinates describe
     a closed shape or an open shape.
+  }
+  \item{reduceA, reduceB}{
+    A character value describing the operation to be used if either
+    \code{A} or \code{B} need to be reduced to a single set of
+    coordinates.   One of
+    \code{"intersection"}, \code{"minus"}, \code{"union"}, or
+    \code{"xor"}, in which case \code{polyclip} is used to
+    reduce multiple shapes, or \code{"flatten"}, in which case
+    coordinates for all shapes are returned.  
+  }
+  \item{fillA, fillB}{
+    A character value describing the fill rule.  Possible values are
+    \code{"winding"} or \code{"evenodd"} or \code{NULL}.
+    In the latter case (the default), the fill rule will be taken
+    from the coordinates if the coordinates  have a \code{"rule"}
+    attribute.  Otherwise, the default is \code{"winding"}.
   }
   \item{strict, grep, global}{
     Arguments controlling the interpretation of the gPath
