@@ -80,7 +80,9 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
         unclass(unname(x))
     } else {
         if (numShapes(x) == 1) {
-            x
+            attr(x, "name") <- NULL
+            attr(x, "rule") <- NULL
+            unclass(unname(x))
         } else {
             names <- names(x)
             unames <- sort(unique(names))
