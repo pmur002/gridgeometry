@@ -57,21 +57,21 @@ polylineoffset <- function(A, delta, ...)
 
 polylineoffset.grob <- function(A, delta, ...)
 {
-  if (isEmptyCoords(A))
+  if (isEmptyCoords(grobCoords(A, closed = F)))
   {
     stop("Empty coords grob object.")
   }
-  polyA <- grobCoords(A, closed = F)
+  polyA <- xyListFromGrob(A, closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
 polylineoffset.gList <- function(A, delta, ...)
 {
-  if (isEmptyCoords(A))
+  if (isEmptyCoords(grobCoords(A, closed = F)))
   {
     stop("Empty coords grob object.")
   }
-  polyA <- grobCoords(A, closed = F)
+  polyA <- xyListFromGrob(A, closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
@@ -92,13 +92,13 @@ polylineoffset.list <- function(A, delta, ...)
 
 polylineoffset.character <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- grobCoords(grid.get(A, strict, grep, global), closed = F)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
 polylineoffset.gPath <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- grobCoords(grid.get(A, strict, grep, global), closed = F)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
@@ -109,21 +109,21 @@ polyoffset <- function(A, delta, ...)
 
 polyoffset.grob <- function(A, delta, ...)
 {
-  if (isEmptyCoords(A))
+  if (isEmptyCoords(grobCoords(A, closed = T)))
   {
     stop("Empty coords grob object.")
   }
-  polyA <- grobCoords(A, closed = T)
+  polyA <- xyListFromGrob(A, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
 polyoffset.gList <- function(A, delta, ...)
 {
-  if (isEmptyCoords(A))
+  if (isEmptyCoords(grobCoords(A, closed = T)))
   {
     stop("Empty coords grob object.")
   }
-  polyA <- grobCoords(A, closed = T)
+  polyA <- xyListFromGrob(A, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
@@ -144,12 +144,12 @@ polyoffset.list <- function(A, delta, ...)
 
 polyoffset.character <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- grobCoords(grid.get(A, strict, grep, global), closed = T)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
 polyoffset.gPath <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- grobCoords(grid.get(A, strict, grep, global), closed = T)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }

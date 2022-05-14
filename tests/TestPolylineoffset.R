@@ -6,7 +6,7 @@ grobLine = linesGrob(x = c(.4, .8, .8, .2, .6), y = c(.3, .3, .8, .8, .6), name 
 grobLine2 = linesGrob(x = c(.6, 0.4), y = c(.6, 0.6), name = "Line 2")
 grobPathLine = gPath("Line 1")
 grobListLine = gList(grobLine, grobLine2)
-xyListLine <- grobCoords(grobLine, closed = F)
+xyListLine <- xyListFromGrob(grobLine, closed = F)
 
 
 

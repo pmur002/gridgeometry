@@ -6,7 +6,7 @@ grobPolygon <- polygonGrob(x = c(.5, .8, .8, .5, .6), y = c(.3, .3, .8, .8, .55)
 grobCircle <- circleGrob(0.25, r = 0.25, name = "Circle 1")
 grobPathPolygon <- gPath("Polygon 1")
 grobListPolygon <- gList(grobPolygon, grobCircle)
-xyListPolygon <- grobCoords(grobPolygon, closed = T)
+xyListPolygon <- xyListFromGrob(grobPolygon, closed = T)
 
 
 
