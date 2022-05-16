@@ -61,7 +61,7 @@ polylineoffset.grob <- function(A, delta, ...)
   {
     stop("Empty coords grob object.")
   }
-  polyA <- xyListFromGrob(A, closed = F)
+  polyA <- xyListFromGrob(A, op = "flatten" closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
@@ -71,7 +71,7 @@ polylineoffset.gList <- function(A, delta, ...)
   {
     stop("Empty coords grob object.")
   }
-  polyA <- xyListFromGrob(A, closed = F)
+  polyA <- xyListFromGrob(A, op = "flatten", closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
@@ -92,13 +92,13 @@ polylineoffset.list <- function(A, delta, ...)
 
 polylineoffset.character <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = F)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), op = "flatten", closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
 polylineoffset.gPath <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = F)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), op = "flatten", closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
@@ -117,13 +117,13 @@ polyoffset.grob <- function(A, delta, ...)
   coords <- polyoffset(polyA, delta, ...)
 }
 
-polyoffset.gList <- function(A, delta, ...)
+polyoffset.gList <- function(A, delta, reduce = "union", ...)
 {
   if (isEmptyCoords(grobCoords(A, closed = T)))
   {
     stop("Empty coords grob object.")
   }
-  polyA <- xyListFromGrob(A, closed = T)
+  polyA <- xyListFromGrob(A, reduce, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
