@@ -2,6 +2,16 @@
 \title{NEWS file for the gridGeometry package}
 \encoding{UTF-8}
 
+\section{Changes in version 0.3-1}{
+  \itemize{
+    \item The default \code{op} for \code{xyListFromGrob()}
+    is now \code{"flatten"} when \code{closed = FALSE}.
+    
+    \item The default \code{closed} value for \code{xyListFromGrob()}
+    (at least) is now determined by \code{isClosedShape()}.
+  }
+}
+
 \section{Changes in version 0.3-0}{
   \itemize{
     \item Add dependency on R 4.2.0 because works with more complex

@@ -14,23 +14,23 @@
 }
 \usage{
 polyclip(A, B, ...)
-\method{polyclip}{grob}(A, B, op="intersection", closed=TRUE,
+\method{polyclip}{grob}(A, B, op="intersection", closed=isClosedShape(A),
          reduceA = if (closed) "union" else "flatten",
          reduceB = "union",
          fillA = NULL, fillB = NULL,
          ...)
-\method{polyclip}{gList}(A, B, op="intersection", closed=TRUE,
+\method{polyclip}{gList}(A, B, op="intersection", closed=isClosedShape(A),
          reduceA = if (closed) "union" else "flatten",
          reduceB = "union",
          fillA = NULL, fillB = NULL,
          ...)
-\method{polyclip}{gPath}(A, B, op="intersection", closed=TRUE,
+\method{polyclip}{gPath}(A, B, op="intersection", closed,
                          strict=FALSE, grep=FALSE, global=FALSE,
          reduceA = if (closed) "union" else "flatten",
          reduceB = "union",
          fillA = NULL, fillB = NULL,
          ...)
-\method{polyclip}{character}(A, B, op="intersection", closed=TRUE,
+\method{polyclip}{character}(A, B, op="intersection", closed,
                              strict=FALSE, grep=FALSE, global=FALSE,
          reduceA = if (closed) "union" else "flatten",
          reduceB = "union",

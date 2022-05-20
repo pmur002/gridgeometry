@@ -81,7 +81,7 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
     } else {
         if (numShapes(x) == 1) {
             attr(x, "name") <- NULL
-            attr(x, "rule") <- NULL
+            ## Keep rule because polyclipGridGrob() will use it
             unclass(unname(x))
         } else {
             names <- names(x)
@@ -140,7 +140,9 @@ xyListFromCoords.GridGTreeCoords <- function(x, op, closed, rule, ...) {
     coords
 }
 
-xyListFromGrob <- function(x, op = "union", closed = TRUE, ...) {
+xyListFromGrob <- function(x,
+                           op = if (closed) "union" else "flatten",
+                           closed = isClosedShape(x), ...) {
     if (getRversion() < "4.2.0") {
         ## grobCoords() result became more complex in R 4.2.0
         grobCoords(x, closed)
@@ -149,5 +151,51 @@ xyListFromGrob <- function(x, op = "union", closed = TRUE, ...) {
         rule <- attr(coords, "rule")
         xyListFromCoords(coords, op, closed, rule, ...)
     }
+}
+
+################################################################################
+## Determine default 'closed' value
+##
+## This is implemented in 'grid' in R >= 4.3.0, but the code
+## here allows 'gridGeometry' to work with earlier versions of R
+isClosedShape <- function(x, ...) {
+    if (getRversion() >= "4.3.0") {
+        isClosed <- get("isClosed", "package:grid")
+        isClosed(x, ...)
+    } else {
+        UseMethod("isClosedShape")
+    }
+}
+
+isClosedTRUE <- function(x, ...) {
+    TRUE
+}
+
+isClosedFALSE <- function(x, ...) {
+    FALSE
+}
+
+isClosedShape.default <- isClosedTRUE
+
+isClosedShape.move.to <- isClosedFALSE
+isClosedShape.line.to <- isClosedFALSE
+isClosedShape.lines <- isClosedFALSE
+isClosedShape.polyline <- isClosedFALSE
+isClosedShape.segments <- isClosedFALSE
+isClosedShape.beziergrob <- isClosedFALSE
+
+isClosedShape.xspline <- function(x, ...) {
+    if (x$open)
+        FALSE
+    else
+        TRUE
+}
+
+isClosedShape.points <- function(x, ...) {
+    switch(as.character(x$pch),
+           "3"=, ## plus
+           "4"=, ## times
+           "8"=FALSE, ## plus-times
+           TRUE)
 }
 

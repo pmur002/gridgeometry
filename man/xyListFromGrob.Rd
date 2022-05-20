@@ -8,7 +8,8 @@
   (a list of (x,y) lists) from a grob.  
 }
 \usage{
-xyListFromGrob(x, op = "union", closed = TRUE, ...)
+xyListFromGrob(x, op = if (closed) "union" else "flatten",
+               closed = isClosedShape(x), ...)
 }
 \arguments{
   \item{x}{
@@ -19,6 +20,10 @@ xyListFromGrob(x, op = "union", closed = TRUE, ...)
     \code{x} needs to be collapsed to a single shape.  One of
     \code{"intersection"}, \code{"minus"}, \code{"union"}, or
     \code{"xor"}.
+
+    Can also be \code{"flatten"}, which just
+    returns an (x, y) list for each shape the grob draws.
+    This is usually the best choice when \code{closed = FALSE}.
   }
   \item{closed}{
     A logical value indicating whether we coordinates describing
