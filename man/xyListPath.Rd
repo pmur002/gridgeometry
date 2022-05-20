@@ -13,11 +13,11 @@
   (a list of (x,y) lists).  
 }
 \usage{
-xyListToPath(x, rule="winding", name=NULL, gp=gpar())
+xyListToPath(x, rule=, name=NULL, gp=gpar())
 xyListToPolygon(x, name=NULL, gp=gpar())
 xyListToLine(x, name=NULL, gp=gpar()) 
 
-xyListPath(x, rule="winding", name=NULL, gp=gpar())
+xyListPath(x, rule, name=NULL, gp=gpar())
 xyListPolygon(x, name=NULL, gp=gpar())
 xyListLine(x, name=NULL, gp=gpar()) 
 }

@@ -9,6 +9,8 @@
     
     \item The default \code{closed} value for \code{xyListFromGrob()}
     (at least) is now determined by \code{isClosedShape()}.
+
+    \item New \code{grid.reduce()} function.
   }
 }
 

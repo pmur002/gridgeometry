@@ -184,3 +184,36 @@ grid.newpage()
 grid.draw(gt)
 grid.trim(gt, .2, .8, gp=gpar(lwd=5))
 
+
+
+library(gridGeometry)
+
+
+## grid.reduce
+## (three circles become one union'ed shape)
+grob <- circleGrob(1:3/4, r=.2)
+grid.newpage()
+grid.reduce(grob, gp=gpar(fill="grey"))
+
+## grid.reduce
+## (three circles become one xor'ed shape)
+grid.newpage()
+grid.reduce(grob, op="xor", gp=gpar(fill="grey"))
+
+## grid.reduce
+## (path with hole remains path with hole because fill rule is retained)
+path <- pathGrob(c(.3, .3, .7, .7, .4, .4, .6, .6),
+                 c(.3, .7, .7, .3, .4, .6, .6, .4),
+                 id.lengths=c(4, 4),
+                 rule="evenodd")
+grid.newpage()
+grid.reduce(path, gp=gpar(fill="grey"))
+
+## grid.reduce
+## (gTree with path with hole and rect, still has hole because fill
+##  rule on path is retained)
+rect <- rectGrob(0, 1, just=c("left", "top"), .5, .5)
+gt <- gTree(children=gList(path, rect))
+grid.newpage()
+grid.reduce(gt, gp=gpar(fill="grey"))
+
