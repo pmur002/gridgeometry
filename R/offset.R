@@ -5,9 +5,9 @@ polylineoffsetGrob <- function(A, delta, name=NULL, gp=gpar(), ...)
               name = name, gp = gp, cl = "polylineoffsetGrob")
 }
 
-polyoffsetGrob <- function(A, delta, name=NULL, gp=gpar(), ...)
+polyoffsetGrob <- function(A, delta, reduce = "union", name=NULL, gp=gpar(), ...)
 {
-  gt <- gTree(A = A, delta = delta, 
+  gt <- gTree(A = A, delta = delta, reduce = reduce,
               polyoffsetArgs = list(...), 
               name = name, gp = gp, cl = "polyoffsetGrob")
 }
@@ -29,9 +29,9 @@ grid.polyoffset <- function(A, delta, ...)
   UseMethod("grid.polyoffset")
 }
 
-grid.polyoffset.default <- function(A, delta, ...)
+grid.polyoffset.default <- function(A, delta, reduce = "union", ...)
 {
-  g <- polyoffsetGrob(A, delta, ...)
+  g <- polyoffsetGrob(A, delta, reduce, ...)
   grid.draw(g)
   return (g)
 }
@@ -45,7 +45,7 @@ makeContent.polylineoffsetGrob <- function(x)
 
 makeContent.polyoffsetGrob <- function(x)
 {
-  coords <- polyoffset(x$A, x$delta, x$polyoffsetArgs)
+  coords <- polyoffset(x$A, x$delta, x$reduce, x$polyoffsetArgs)
   grob <- xyListPolygon(coords)
   setChildren(x, gList(grob))
 }
@@ -61,7 +61,7 @@ polylineoffset.grob <- function(A, delta, ...)
   {
     stop("Empty coords grob object.")
   }
-  polyA <- xyListFromGrob(A, op = "flatten" closed = F)
+  polyA <- xyListFromGrob(A, op = "flatten", closed = F)
   coords <- polylineoffset(polyA, delta, ...)
 }
 
@@ -102,18 +102,18 @@ polylineoffset.gPath <- function(A, delta, ..., strict=FALSE, grep=FALSE, global
   coords <- polylineoffset(polyA, delta, ...)
 }
 
-polyoffset <- function(A, delta, ...)
+polyoffset <- function(A, delta, reduce = "union", ...)
 {
   UseMethod("polyoffset")
 }
 
-polyoffset.grob <- function(A, delta, ...)
+polyoffset.grob <- function(A, delta, reduce = "union", ...)
 {
   if (isEmptyCoords(grobCoords(A, closed = T)))
   {
     stop("Empty coords grob object.")
   }
-  polyA <- xyListFromGrob(A, closed = T)
+  polyA <- xyListFromGrob(A, op = reduce, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
@@ -123,7 +123,7 @@ polyoffset.gList <- function(A, delta, reduce = "union", ...)
   {
     stop("Empty coords grob object.")
   }
-  polyA <- xyListFromGrob(A, reduce, closed = T)
+  polyA <- xyListFromGrob(A, op = reduce, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
@@ -142,14 +142,14 @@ polyoffset.list <- function(A, delta, ...)
   coords <- do.call(polyclip::polyoffset, c(list(A = A, delta = delta), ...))
 }
 
-polyoffset.character <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
+polyoffset.character <- function(A, delta, ..., reduce = "union", strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = T)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), op = reduce, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
-polyoffset.gPath <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
+polyoffset.gPath <- function(A, delta, ..., reduce = "union", strict=FALSE, grep=FALSE, global=FALSE)
 {
-  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), closed = T)
+  polyA <- xyListFromGrob(grid.get(A, strict, grep, global), reduce, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }

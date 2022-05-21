@@ -35,7 +35,7 @@ grid.draw(offset)
 
 #Test polyoffsetGrob.gList
 grid.newpage()
-offset <- polyoffsetGrob(grobListPolygon, delta = unit(0.5, "cm"), jointype="square", endtype = "opensquare")
+offset <- polyoffsetGrob(grobListPolygon, delta = unit(0.5, "cm"), reduce = "union", jointype="square", endtype = "opensquare")
 grid.draw(offset)
 
 
@@ -65,7 +65,7 @@ grid.draw(xyListPolygon(offset))
 
 #Test Polyoffset.gList
 grid.newpage()
-offset <- polyoffset(grobListPolygon, delta = unit(0.5, "cm"), jointype="square", endtype = "opensquare")
+offset <- polyoffset(grobListPolygon, delta = unit(0.5, "cm"), reduce = "union", jointype="square", endtype = "opensquare")
 grid.draw(xyListPolygon(offset))
 
 
@@ -91,4 +91,5 @@ grid.polyoffset(grobPathPolygon, delta = unit(0.5, "cm"), jointype="square", end
 
 #Test grid.polyoffset.gList
 grid.newpage()
-grid.polyoffset(grobListPolygon, delta = unit(0.5, "cm"), jointype="square", endtype = "opensquare")
+grid.polyoffset(grobListPolygon, delta = unit(0.5, "cm"), reduce = "union", jointype="square", endtype = "opensquare")
+
