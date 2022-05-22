@@ -86,7 +86,7 @@ makeContent.reducegrob <- function(x) {
     setChildren(x, do.call(gList, children[!is.null(children)]))
 }
 
-reduceGrob <- function(x, op="union",
+reduceGrob <- function(x, op=if (isClosedShape(x)) "union" else "flatten",
                        openFn=xyListToLine, closedFn=xyListToPath,
                        name=NULL, gp=gpar()) {
     if (!grobArg(x))
