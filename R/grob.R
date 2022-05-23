@@ -3,7 +3,13 @@
 ## Convert polyclip() results to grobs
 
 ## Convert (closed) 'polyclip' polygon result to 'grid' path
-xyListPath <- function(x, rule="winding", name=NULL, gp=gpar()) {
+xyListPath <- function(x, rule, name=NULL, gp=gpar()) {
+    if (missing(rule)) {
+        if (is.null(attr(x, "rule")))
+            rule <- "winding"
+        else
+            rule <- attr(x, "rule")
+    }
     ## Remove any coordinate sets that are too short
     x <- x[sapply(x, function(c) length(c$x) > 1)]
     if (length(x) == 0) {
@@ -73,7 +79,7 @@ xyListFromCoords <- function(x, op, closed, rule, ...) {
 
 emptyXYlist <- list(list(x = 0, y = 0))
 
-xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
+xyListFromCoords.GridGrobCoords <- function(x, op, closed, ...) {
     if (op == "flatten") {
         attr(x, "name") <- NULL
         attr(x, "rule") <- NULL
@@ -81,7 +87,7 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
     } else {
         if (numShapes(x) == 1) {
             attr(x, "name") <- NULL
-            attr(x, "rule") <- NULL
+            ## Keep rule because, e.g., polyclipGridGrob() will use it
             unclass(unname(x))
         } else {
             names <- names(x)
@@ -89,7 +95,7 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
             n <- length(unames)
             A <- x[names == unames[1]]
             B <- x[names == unames[2]]
-            fillrule <- convertRule(rule)
+            fillrule <- convertRule(attr(x, "rule"))
             coords <- polyclip::polyclip(A, B, op, closed,
                                          fillA = fillrule,
                                          fillB = fillrule,
@@ -110,24 +116,24 @@ xyListFromCoords.GridGrobCoords <- function(x, op, closed, rule, ...) {
                         coords <- emptyXYlist
                 }
             }
-            ## attr(coords, "rule") <- NULL
             coords
         }
     }
 }
 
-xyListFromCoords.GridGTreeCoords <- function(x, op, closed, rule, ...) {
+xyListFromCoords.GridGTreeCoords <- function(x, op, closed, ...) {
     if (op == "flatten") {
-        childCoords <- lapply(x, xyListFromCoords, op, closed, rule, ...)
+        childCoords <- lapply(x, xyListFromCoords, op, closed, ...)
         coords <- do.call(c, childCoords)
         attr(coords, "rule") <- NULL
     } else {
-        childCoords <- lapply(x, xyListFromCoords, op, closed, rule, ...)
-        fillrule <- convertRule(rule)
+        childCoords <- lapply(x, xyListFromCoords, op, closed, ...)
         coords <- Reduce(function(A, B) {
+                             fillA <- convertRule(attr(A, "rule"))
+                             fillB <- convertRule(attr(B, "rule"))
                              coords <- polyclip::polyclip(A, B, op, closed,
-                                                          fillA = fillrule,
-                                                          fillB = fillrule,
+                                                          fillA = fillA,
+                                                          fillB = fillB,
                                                           ...)
                              if (!length(coords))
                                  emptyXYlist
@@ -135,19 +141,65 @@ xyListFromCoords.GridGTreeCoords <- function(x, op, closed, rule, ...) {
                                  coords
                          },
                          childCoords)
-        attr(coords, "rule") <- rule
     }
     coords
 }
 
-xyListFromGrob <- function(x, op = "union", closed = TRUE, ...) {
+xyListFromGrob <- function(x,
+                           op = if (closed) "union" else "flatten",
+                           closed = isClosedShape(x), ...) {
     if (getRversion() < "4.2.0") {
         ## grobCoords() result became more complex in R 4.2.0
         grobCoords(x, closed)
     } else {
         coords <- grobCoords(x, closed)
-        rule <- attr(coords, "rule")
-        xyListFromCoords(coords, op, closed, rule, ...)
+        xyListFromCoords(coords, op, closed, ...)
     }
+}
+
+################################################################################
+## Determine default 'closed' value
+##
+## This is implemented in 'grid' in R >= 4.3.0, but the code
+## here allows 'gridGeometry' to work with earlier versions of R
+isClosedShape <- function(x, ...) {
+    if (getRversion() >= "4.3.0") {
+        isClosed <- get("isClosed", "package:grid")
+        isClosed(x, ...)
+    } else {
+        UseMethod("isClosedShape")
+    }
+}
+
+isClosedTRUE <- function(x, ...) {
+    TRUE
+}
+
+isClosedFALSE <- function(x, ...) {
+    FALSE
+}
+
+isClosedShape.default <- isClosedTRUE
+
+isClosedShape.move.to <- isClosedFALSE
+isClosedShape.line.to <- isClosedFALSE
+isClosedShape.lines <- isClosedFALSE
+isClosedShape.polyline <- isClosedFALSE
+isClosedShape.segments <- isClosedFALSE
+isClosedShape.beziergrob <- isClosedFALSE
+
+isClosedShape.xspline <- function(x, ...) {
+    if (x$open)
+        FALSE
+    else
+        TRUE
+}
+
+isClosedShape.points <- function(x, ...) {
+    switch(as.character(x$pch),
+           "3"=, ## plus
+           "4"=, ## times
+           "8"=FALSE, ## plus-times
+           TRUE)
 }
 

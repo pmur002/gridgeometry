@@ -20,13 +20,18 @@ export("xyListPath",
        "polyoffset",
 
        "grid.polyclip",
+       "grid.reduce",
        "grid.trim",
        "grid.polyoffset",
        "grid.polylineoffset",
        "polyclipGrob",
-       "trimGrob",
+
        "polylineoffsetGrob",
-       "polyoffsetGrob")
+       "polyoffsetGrob",
+
+       "reduceGrob",
+       "trimGrob")
+
 
 
 S3method("trim", "default")
@@ -37,6 +42,7 @@ S3method("trim", "grob")
 S3method("trim", "gPath")
          
 S3method("makeContent", "polyclipgrob")
+S3method("makeContent", "reducegrob")
 S3method("makeContent", "trimgrob")
 S3method("makeContent", "polylineoffsetGrob")
 S3method("makeContent", "polyoffsetGrob")
@@ -66,3 +72,7 @@ S3method("grid.polylineoffset", "default")
 
 S3method("xyListFromCoords", "GridGrobCoords")
 S3method("xyListFromCoords", "GridGTreeCoords")
+
+S3method("grid.reduce", "grob")
+S3method("grid.reduce", "gPath")
+S3method("grid.reduce", "character")

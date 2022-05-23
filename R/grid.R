@@ -1,6 +1,14 @@
 
 ## High-level interface (starts with grobs and ends with grobs)
 
+grobArg <- function(x) {
+    is.character(x) || inherits(x, "gPath") ||
+        inherits(x, "grob") || inherits(x, "gList")
+}
+
+################################################################################
+## grid.polyclip()
+
 makeContent.polyclipgrob <- function(x) {
     children <- vector("list", 2)
     closedPaths <- do.call(polyclip,
@@ -18,11 +26,6 @@ makeContent.polyclipgrob <- function(x) {
                                   name=paste0(x$name, ".open"))
     }
     setChildren(x, do.call(gList, children[!is.null(children)]))
-}
-
-grobArg <- function(x) {
-    is.character(x) || inherits(x, "gPath") ||
-        inherits(x, "grob") || inherits(x, "gList")
 }
 
 polyclipGrob <- function(A, B, op="intersection",
@@ -64,6 +67,64 @@ grid.polyclip.gPath <- function(A, B, ..., name=A$name, gp=NULL,
 grid.polyclip.character <- function(A, B, ...) {
     grid.polyclip(gPath(A), B, ...)
 }
+
+################################################################################
+## grid.reduce()
+
+makeContent.reducegrob <- function(x) {
+    children <- vector("list", 2)
+    closedPaths <- xyListFromGrob(x$grob, op = x$op, closed = TRUE)
+    if (length(closedPaths)) {
+        children[[1]] <- x$closedFn(closedPaths,
+                                    name=paste0(x$name, ".closed"))
+    }
+    openPaths <- xyListFromGrob(x$grob, op = x$op, closed = FALSE)
+    if (length(openPaths)) {
+        children[[2]] <- x$openFn(openPaths, 
+                                  name=paste0(x$name, ".open"))
+    }
+    setChildren(x, do.call(gList, children[!is.null(children)]))
+}
+
+reduceGrob <- function(x, op=if (isClosedShape(x)) "union" else "flatten",
+                       openFn=xyListToLine, closedFn=xyListToPath,
+                       name=NULL, gp=gpar()) {
+    if (!grobArg(x))
+        stop("Invalid argument")
+    gTree(grob=x, op=op, openFn=openFn, closedFn=closedFn,
+          gp=gp, name=name, cl="reducegrob")
+}
+
+grid.reduce <- function(x, ...) {
+    UseMethod("grid.reduce")
+}
+
+grid.reduce.grob <- function(x, ...) {
+    grid.draw(reduceGrob(x, ...))
+}
+
+grid.reduce.gPath <- function(x, ..., name=x$name, gp=NULL,
+                              strict=FALSE, grep=FALSE, global=FALSE) {
+    if (global)
+        stop("Cannot replace multiple grobs with single grob")
+    oldgrob <- grid.get(x, strict=strict, grep=grep)
+    if (is.null(gp)) {
+        gp <- oldgrob$gp
+    } 
+    newgrob <- forceGrob(reduceGrob(x, ..., name=name, gp=gp))
+    if (name != x$name) {
+        grid.draw(newgrob)
+    } else {
+        grid.set(x, newgrob, strict, grep)
+    }
+}
+
+grid.reduce.character <- function(x, ...) {
+    grid.polyclip(gPath(x), ...)
+}
+
+################################################################################
+## grid.trim()
 
 makeContent.trimgrob <- function(x) {
     pts <- do.call(trim,

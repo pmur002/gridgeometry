@@ -43,7 +43,7 @@ polyclipGridGrob <- function(A, B, op, closed, reduceA, reduceB, fillA, fillB,
                        fillA = fillA, fillB = fillB, ...)
 }
 
-polyclip.grob <- function(A, B, op="intersection", closed=TRUE,
+polyclip.grob <- function(A, B, op="intersection", closed=isClosedShape(A),
                           reduceA = if (closed) "union" else "flatten",
                           reduceB = "union",
                           fillA = NULL, fillB = NULL,
@@ -51,7 +51,7 @@ polyclip.grob <- function(A, B, op="intersection", closed=TRUE,
     polyclipGridGrob(A, B, op, closed, reduceA, reduceB, fillA, fillB, ...)
 }
 
-polyclip.gList <- function(A, B, op="intersection", closed=TRUE,
+polyclip.gList <- function(A, B, op="intersection", closed=isClosedShape(A),
                            reduceA = if (closed) "union" else "flatten",
                            reduceB = "union",
                            fillA = NULL, fillB = NULL,
@@ -59,23 +59,27 @@ polyclip.gList <- function(A, B, op="intersection", closed=TRUE,
     polyclipGridGrob(A, B, op, closed, reduceA, reduceB, fillA, fillB, ...)
 }
 
-polyclip.gPath <- function(A, B, op="intersection", closed=TRUE,
+polyclip.gPath <- function(A, B, op="intersection", closed,
                            strict=FALSE, grep=FALSE, global=FALSE,
                            reduceA = if (closed) "union" else "flatten",
                            reduceB = "union",
                            fillA = NULL, fillB = NULL,
                            ...) {
     A <- grid.get(A, strict, grep, global)
+    if (missing(closed))
+        closed <- isClosedShape(A)
     polyclipGridGrob(A, B, op, closed, reduceA, reduceB, fillA, fillB, ...)
 }
 
-polyclip.character <- function(A, B, op="intersection", closed=TRUE,
+polyclip.character <- function(A, B, op="intersection", closed,
                                strict=FALSE, grep=FALSE, global=FALSE,
                                reduceA = if (closed) "union" else "flatten",
                                reduceB = "union",
                                fillA = NULL, fillB = NULL,
                                ...) {
     A <- grid.get(A, strict, grep, global)
+    if (missing(closed))
+        closed <- isClosedShape(A)
     polyclipGridGrob(A, B, op, closed, reduceA, reduceB, fillA, fillB, ...)
 }
 
