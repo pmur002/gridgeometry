@@ -17,7 +17,28 @@ grid.polylineoffset <- function(A, delta, ...)
   UseMethod("grid.polylineoffset")
 }
 
-grid.polylineoffset.default <- function(A, delta, ...)
+grid.polylineoffset.grob <- function(A, delta, ...)
+{
+  g <- polylineoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polylineoffset.gList <- function(A, delta, ...)
+{
+  g <- polylineoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polylineoffset.character <- function(A, delta, ...)
+{
+  g <- polylineoffsetGrob(A, delta, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polylineoffset.gPath <- function(A, delta, ...)
 {
   g <- polylineoffsetGrob(A, delta, ...)
   grid.draw(g)
@@ -29,7 +50,28 @@ grid.polyoffset <- function(A, delta, ...)
   UseMethod("grid.polyoffset")
 }
 
-grid.polyoffset.default <- function(A, delta, reduce = "union", ...)
+grid.polyoffset.grob <- function(A, delta, reduce = "union", ...)
+{
+  g <- polyoffsetGrob(A, delta, reduce, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polyoffset.gList <- function(A, delta, reduce = "union", ...)
+{
+  g <- polyoffsetGrob(A, delta, reduce, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polyoffset.character <- function(A, delta, reduce = "union", ...)
+{
+  g <- polyoffsetGrob(A, delta, reduce, ...)
+  grid.draw(g)
+  return (g)
+}
+
+grid.polyoffset.gPath <- function(A, delta, reduce = "union", ...)
 {
   g <- polyoffsetGrob(A, delta, reduce, ...)
   grid.draw(g)

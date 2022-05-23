@@ -81,8 +81,8 @@ grid.newpage()
 grid.polylineoffset(grobLine, delta = unit(0.1, "cm"), jointype="square", endtype = "opensquare")
 
 #Test grid.polylineoffset.list (Should be an error)
-grid.newpage()
-grid.polylineoffset(xyListLine, delta = unit(0.1, "cm"), jointype="square", endtype = "opensquare")
+#grid.newpage()
+#grid.polylineoffset(xyListLine, delta = unit(0.1, "cm"), jointype="square", endtype = "opensquare")
 
 #Test grid.polylineoffset.character
 grid.newpage()

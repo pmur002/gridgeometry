@@ -67,8 +67,15 @@ S3method("grid.trim", "character")
 S3method("grid.trim", "default")
 S3method("grid.trim", "gPath")
 
-S3method("grid.polyoffset", "default")
-S3method("grid.polylineoffset", "default")
+S3method("grid.polyoffset", "grob")
+S3method("grid.polyoffset", "gList")
+S3method("grid.polyoffset", "gPath")
+S3method("grid.polyoffset", "character")
+
+S3method("grid.polylineoffset", "grob")
+S3method("grid.polylineoffset", "gList")
+S3method("grid.polylineoffset", "gPath")
+S3method("grid.polylineoffset", "character")
 
 S3method("xyListFromCoords", "GridGrobCoords")
 S3method("xyListFromCoords", "GridGTreeCoords")

@@ -75,9 +75,9 @@ grid.draw(xyListPolygon(offset))
 grid.newpage()
 grid.polyoffset(grobPolygon, delta = unit(0.5, "cm"), jointype="square", endtype = "opensquare")
 
-#Test grid.polyoffset.list
-grid.newpage()
-grid.polyoffset(xyListPolygon, delta = unit(0.5, "cm"), jointype="square", endtype = "opensquare")
+#Test grid.polyoffset.list (should be error)
+#grid.newpage()
+#grid.polyoffset(xyListPolygon, delta = unit(0.5, "cm"), jointype="square", endtype = "opensquare")
 
 #Test grid.polyoffset.character
 grid.newpage()
