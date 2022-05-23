@@ -107,7 +107,7 @@ grid.draw(grob)
 #Create donut shape using polyline offset instead
 grid.newpage();
 grob <- circleGrob(r = 0.25, gp = gpar(col = "blue", lwd = 3))
-offset <- polylineoffsetGrob(xyListLine(grobCoords(grob, closed = T)), delta = 0.1, jointype="round", endtype = "openround", gp = gpar(col = "red", lwd = 3))
+offset <- polylineoffsetGrob(xyListLine(grobCoords(grob, closed = T)), delta = 0.1, jointype="round", endtype = "openround", gp = gpar(col = "red", lwd = 3, fill = "blue"), rule = "winding")
 grid.draw(offset)
 
 #Test low level polyoffset.gPath

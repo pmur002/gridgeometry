@@ -1,13 +1,13 @@
-polylineoffsetGrob <- function(A, delta, name=NULL, gp=gpar(), ...)
+polylineoffsetGrob <- function(A, delta, rule = "winding", name=NULL, gp=gpar(), ...)
 {
-  gt <- gTree(A = A, delta = delta, 
+  gt <- gTree(A = A, delta = delta, rule = rule,
               polylineoffsetArgs = list(...), 
               name = name, gp = gp, cl = "polylineoffsetGrob")
 }
 
-polyoffsetGrob <- function(A, delta, reduce = "union", name=NULL, gp=gpar(), ...)
+polyoffsetGrob <- function(A, delta, reduce = "union", rule = "winding", name=NULL, gp=gpar(), ...)
 {
-  gt <- gTree(A = A, delta = delta, reduce = reduce,
+  gt <- gTree(A = A, delta = delta, reduce = reduce, rule = rule,
               polyoffsetArgs = list(...), 
               name = name, gp = gp, cl = "polyoffsetGrob")
 }
@@ -39,14 +39,14 @@ grid.polyoffset.default <- function(A, delta, reduce = "union", ...)
 makeContent.polylineoffsetGrob <- function(x)
 {
   coords <- polylineoffset(x$A, x$delta, x$polylineoffsetArgs)
-  grob <- xyListPolygon(coords)
+  grob <- xyListPath(coords, rule = x$rule)
   setChildren(x, gList(grob))
 }
 
 makeContent.polyoffsetGrob <- function(x)
 {
   coords <- polyoffset(x$A, x$delta, x$reduce, x$polyoffsetArgs)
-  grob <- xyListPolygon(coords)
+  grob <- xyListPath(coords, rule = x$rule)
   setChildren(x, gList(grob))
 }
 
