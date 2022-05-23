@@ -129,7 +129,17 @@ polylineoffset.list <- function(A, delta, ...)
     delta <- unit(delta, "npc")
   }
   delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
-  coords <- do.call(polyclip::polylineoffset, c(list(A = A, delta = delta), ...))
+  
+  param <- list(...)
+  if (!"jointype" %in% names(list(...)))
+  {
+    param <- c(param, jointype = "round")
+  }
+  if (!"endtype" %in% names(list(...)))
+  {
+    param <- c(param, endtype = "openround")
+  }
+  coords <- do.call(polyclip::polylineoffset, c(list(A = A, delta = delta), param))
 }
 
 polylineoffset.character <- function(A, delta, ..., strict=FALSE, grep=FALSE, global=FALSE)
@@ -181,7 +191,14 @@ polyoffset.list <- function(A, delta, ...)
     delta <- unit(delta, "npc")
   }
   delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
-  coords <- do.call(polyclip::polyoffset, c(list(A = A, delta = delta), ...))
+  
+  param <- list(...)
+  if (!"jointype" %in% names(list(...)))
+  {
+    param <- c(param, jointype = "round")
+  }
+  
+  coords <- do.call(polyclip::polyoffset, c(list(A = A, delta = delta), param))
 }
 
 polyoffset.character <- function(A, delta, ..., reduce = "union", strict=FALSE, grep=FALSE, global=FALSE)
