@@ -12,7 +12,7 @@
   at most one open shape.
 }
 \usage{
-reduceGrob(x, op="union",
+reduceGrob(x, op=if (isClosedShape(x)) "union" else "flatten",
            openFn=xyListToLine, closedFn=xyListToPath,
            name=NULL, gp=gpar()) 
 grid.reduce(x, ...)
@@ -25,7 +25,7 @@ grid.reduce(x, ...)
   \item{op}{
     A character value describing the operation.  One of
     \code{"intersection"}, \code{"minus"}, \code{"union"},
-    \code{"xor"}, \code{"flatten"}.
+    \code{"xor"}, or \code{"flatten"}.
   }
   \item{openFn}{
     The function used to create grobs from the open shapes in the result.
