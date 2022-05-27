@@ -1,28 +1,28 @@
-\name{polylineoffset}
-\alias{polylineoffset}
-\alias{polylineoffset.grob}
-\alias{polylineoffset.gList}
-\alias{polylineoffset.gPath}
-\alias{polylineoffset.character}
+\name{polyoffset}
+\alias{polyoffset}
+\alias{polyoffset.grob}
+\alias{polyoffset.gList}
+\alias{polyoffset.gPath}
+\alias{polyoffset.character}
 \title{
-  Perform Line offset region on Grobs
+  Perform offset region on Grobs
 }
 \description{
-  Given a list of polygonal lines or open grob object, generate the offset region (guard region, buffer region, morphological dilation) formed by shifting the boundary outwards by a specific distance.  
+  Given a polygonal region or closed grob, generate the offset region (guard region, buffer region, morphological dilation) formed by shifting the boundary outwards by a specific distance.  
 }
 \usage{
-polylineoffset(A, delta, ...)
-\method{polylineoffset}{grob}(A, delta, 
+polyoffset(A, delta, ...)
+\method{polyoffset}{grob}(A, delta, reduce = "union",
          ...)
-\method{polylineoffset}{gList}(A, delta,
+\method{polyoffset}{gList}(A, delta, reduce = "union",
          ...)
-\method{polylineoffset}{gPath}(A, delta,
+\method{polyoffset}{gPath}(A, delta, reduce = "union",
                          strict=FALSE, grep=FALSE, global=FALSE,
                          ...)
-\method{polylineoffset}{character}(A, delta,
+\method{polyoffset}{character}(A, delta, reduce = "union",
                              strict=FALSE, grep=FALSE, global=FALSE,
                              ...)
-\method{polylineoffset}{list}(A, delta,
+\method{polyoffset}{list}(A, delta, reduce = "union",
                              strict=FALSE, grep=FALSE, global=FALSE,
                              ...)
 }
@@ -37,6 +37,13 @@ polylineoffset(A, delta, ...)
   
   \item{delta}{
     Distance over which the boundary should be shifted.
+  }
+  
+  \item{reduce}{
+    A character value describing the operation to be used if 
+    \code{x} needs to be collapsed to a single shape.  One of
+    \code{"intersection"}, \code{"minus"}, \code{"union"}, or
+    \code{"xor"}.
   }
   
   \item{strict, grep, global}{
@@ -57,12 +64,11 @@ polylineoffset(A, delta, ...)
   Jack Wong
 }
 \seealso{
-  \code{\link{polylineoffset}}
+  \code{\link{polyoffset}}
 }
 \examples{
-grob <- circleGrob(r = 0.25, gp = gpar(col = "blue", lwd = 3))
-offset <- polylineoffset(xyListLine(grobCoords(grob, closed = T)), delta = 0.1, jointype="round", endtype = "openround", gp = gpar(col = "red", lwd = 3, fill = "blue"), rule = "winding")
-
+grob <- rectGrob(width = 0.5, height = 0.5)
+offset <- polyoffset(grob, 0.2)
 }
 \keyword{ dplot }
 \keyword{ aplot }
