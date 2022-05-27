@@ -1,16 +1,16 @@
-\name{grid.polylineoffset}
-\alias{grid.polylineoffset}
-\alias{polylineoffsetGrob}
+\name{grid.polyoffset}
+\alias{grid.polyoffset}
+\alias{polyoffsetGrob}
 \title{
-  Perform Line offset region on Grobs
+  Perform offset region on Grobs
 }
 \description{
-  Given a polygonal lines or open grob, Generate the offset region (guard region, buffer region, morphological dilation) formed by shifting the boundary outwards by a specific distance.  
+  Given a polygonal region or closed grob, generate the offset region (guard region, buffer region, morphological dilation) formed by shifting the boundary outwards by a specific distance.  
 }
 \usage{
-polylineoffsetGrob(A, delta, rule = "winding",
+polyoffsetGrob(A, delta, reduce = "union", rule = "winding",
              name=NULL, gp=gpar(),  ...) 
-grid.polylineoffset(A, delta, rule = "winding", ...)
+grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
 }
 \arguments{
   \item{A}{
@@ -20,6 +20,12 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
   }
   \item{delta}{
     Distance over which the boundary should be shifted.
+  }
+  \item{reduce}{
+    A character value describing the operation to be used if 
+    \code{x} needs to be collapsed to a single shape.  One of
+    \code{"intersection"}, \code{"minus"}, \code{"union"}, or
+    \code{"xor"}.
   }
   \item{rule}{
     A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}, \code{"oddeven"}
@@ -31,14 +37,14 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
     Graphical parameter settings for the resulting grob.
   }
   \item{\dots}{
-    For \code{polylineoffsetGrob}, arguments passed on to \code{polylineoffset}.
-    For \code{grid.polylineoffset}, arguments used by methods.
+    For \code{polyoffsetGrob}, arguments passed on to \code{polyoffset}.
+    For \code{grid.polyoffset}, arguments used by methods.
   }
 }
 \details{
   The grobs are converted to coordinates by calling \code{grid::xyListFromGrob}.
   
-  The result is a new grob.  In the case of \code{grid.polylineoffset},
+  The result is a new grob.  In the case of \code{grid.polyoffset},
   this new grob will be drawn on the current device.  In the special
   case that \code{A} is a gPath, by default, the new grob will
   \emph{replace} the old grob (the original grob identified by \code{A})
@@ -47,20 +53,20 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
   old grob).
 }
 \value{
-  \code{polylineoffsetGrob} returns a gTree with offset grob coordinate.
+  \code{polyoffsetGrob} returns a gTree with offset grob coordinate.
   
-  \code{grid.polylineoffset} is only used for its side-effect of drawing
+  \code{grid.polyoffset} is only used for its side-effect of drawing
   on the current graphics device.
 }
 \author{
   Jack Wong
 }
 \seealso{
-  \code{\link{polylineoffset}}
+  \code{\link{polyoffset}}
 }
 \examples{
-grob <- circleGrob(r = 0.25, gp = gpar(col = "blue", lwd = 3))
-offset <- polylineoffsetGrob(xyListLine(grobCoords(grob, closed = T)), delta = 0.1, jointype="round", endtype = "openround", gp = gpar(col = "red", lwd = 3, fill = "blue"), rule = "winding")
+grob <- rectGrob(width = 0.5, height = 0.5)
+offset <- polyoffsetGrob(grob, 0.2)
 grid.draw(offset)
 }
 \keyword{ dplot }
