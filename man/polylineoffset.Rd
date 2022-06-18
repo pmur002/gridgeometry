@@ -39,6 +39,13 @@ polylineoffset(A, delta, ...)
     Distance over which the boundary should be shifted.
   }
   
+  \item{jointype}{
+    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}
+    \code{"round"} generate circular arc around the corner. \code{"square"} replace the circular arc with single          straight line. \code{"miter"} omit circular arc and replace with straight line completely.
+  }
+  \item{endtype}{
+    Type of geometrical operation to be performed a the start and end of each line. One of  \code{"closedpolygon"},       \code{"closedline"}, \code{"openbutt"}, \code{"opensquare"}, \code{"openround"}
+  }
   \item{strict, grep, global}{
     Arguments controlling the interpretation of the gPath
     (passed to \code{grid.get}).
@@ -60,9 +67,8 @@ polylineoffset(A, delta, ...)
   \code{\link{polylineoffset}}
 }
 \examples{
-grob <- circleGrob(r = 0.25, gp = gpar(col = "blue", lwd = 3))
-offset <- polylineoffset(xyListLine(grobCoords(grob, closed = T)), delta = 0.1, jointype="round", endtype = "openround", gp = gpar(col = "red", lwd = 3, fill = "blue"), rule = "winding")
-
+grobLine = linesGrob(x = c(.4, .8, .8, .2, .6), y = c(.3, .3, .8, .8, .6), name = "Line 1")
+offset <- polylineoffset(grobLine, delta = unit(0.1, "cm"), jointype="square", endtype = "opensquare")
 }
 \keyword{ dplot }
 \keyword{ aplot }

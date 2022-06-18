@@ -24,11 +24,15 @@ grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
   \item{reduce}{
     A character value describing the operation to be used if 
     \code{x} needs to be collapsed to a single shape.  One of
-    \code{"intersection"}, \code{"minus"}, \code{"union"}, or
+    \code{"intersection"}, \code{"flatten"}, \code{"minus"}, \code{"union"}, or
     \code{"xor"}.
   }
   \item{rule}{
-    A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}, \code{"oddeven"}
+    A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
+  }
+  \item{jointype}{
+    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}
+    \code{"round"} generate circular arc around the corner. \code{"square"} replace the circular arc with single          straight line. \code{"miter"} omit circular arc and replace with straight line completely.
   }
   \item{name}{
     A name for the resulting grob.
@@ -51,6 +55,7 @@ grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
   in the current scene
   (and the new grob will use the same \code{gp} settings as the
   old grob).
+  
 }
 \value{
   \code{polyoffsetGrob} returns a gTree with offset grob coordinate.

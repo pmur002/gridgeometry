@@ -42,8 +42,13 @@ polyoffset(A, delta, ...)
   \item{reduce}{
     A character value describing the operation to be used if 
     \code{x} needs to be collapsed to a single shape.  One of
-    \code{"intersection"}, \code{"minus"}, \code{"union"}, or
+    \code{"intersection"}, \code{"flatten"}, \code{"minus"}, \code{"union"}, or
     \code{"xor"}.
+  }
+  
+  \item{jointype}{
+    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}
+    \code{"round"} generate circular arc around the corner. \code{"square"} replace the circular arc with single          straight line. \code{"miter"} omit circular arc and replace with straight line completely.
   }
   
   \item{strict, grep, global}{
