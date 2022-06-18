@@ -47,8 +47,8 @@ polyoffset(A, delta, ...)
   }
   
   \item{jointype}{
-    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}
-    \code{"round"} generate circular arc around the corner. \code{"square"} replace the circular arc with single          straight line. \code{"miter"} omit circular arc and replace with straight line completely.
+    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}.  See Details for further explanation.
+    
   }
   
   \item{strict, grep, global}{
@@ -61,6 +61,13 @@ polyoffset(A, delta, ...)
 }
 \details{
   Calculate the offset region by using the subject coordinates shift by a delta distance.
+  
+  The argument \code{jointype} determines what happens at the vertices of each line.
+  \itemize{
+    \item{\code{jointype = "round"}: a circular arc is generated.}
+    \item{\code{jointype = "square"}: circular arc is replaced by a single straight line.}
+    \item{\code{jointype = "miter"}: circular arc is omitted entirely and replaced by a single straight line.}
+  }
 }
 \value{
   The result is a new set of coordinates for the outline of the offset region.  
