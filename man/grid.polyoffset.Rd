@@ -21,6 +21,9 @@ grid.polyoffset(A, delta, ...)
   \item{delta}{
     Distance over which the boundary should be shifted.
   }
+  \item{rule}{
+    A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
+  }
   \item{reduce}{
     A character value describing the operation to be used if 
     \code{x} needs to be collapsed to a single shape.  One of

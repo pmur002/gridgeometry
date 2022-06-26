@@ -21,7 +21,9 @@ grid.polylineoffset(A, delta, ...)
   \item{delta}{
     Distance over which the boundary should be shifted.
   }
-
+  \item{rule}{
+    A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
+  }
   \item{name}{
     A name for the resulting grob.
   }
