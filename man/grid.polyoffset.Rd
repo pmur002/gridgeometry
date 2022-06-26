@@ -27,10 +27,7 @@ grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
     \code{"intersection"}, \code{"flatten"}, \code{"minus"}, \code{"union"}, or
     \code{"xor"}.
   }
-  \item{rule}{
-    A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
-  }
-  
+
   \item{name}{
     A name for the resulting grob.
   }
@@ -53,6 +50,8 @@ grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
   old grob).
   
   The argument \code{jointype} determines what happens at the vertices of each line at \code{polyclip::polyoffset}.
+  
+  The argument \code{rule} is a character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
   
 }
 \value{

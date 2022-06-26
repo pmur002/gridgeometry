@@ -21,10 +21,7 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
   \item{delta}{
     Distance over which the boundary should be shifted.
   }
-  \item{rule}{
-    A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
-  }
-  
+
   \item{name}{
     A name for the resulting grob.
   }
@@ -49,6 +46,8 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
   The argument \code{jointype} determines what happens at the vertices of each line at \code{polyclip::polylineoffset}.
   
   The argument \code{endtype} determines what happens at the beginning and end of each line at \code{polyclip::polylineoffset}.
+  
+  The argument \code{rule} is a character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
   
 }
 \value{
