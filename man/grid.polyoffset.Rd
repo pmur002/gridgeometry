@@ -41,8 +41,7 @@ grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
     Graphical parameter settings for the resulting grob.
   }
   \item{\dots}{
-    For \code{polyoffsetGrob}, arguments passed on to \code{polyoffset}.
-    For \code{grid.polyoffset}, arguments used by methods.
+    For \code{polyoffsetGrob}, arguments passed on to \code{polyclip::polyoffset}.
   }
 }
 \details{

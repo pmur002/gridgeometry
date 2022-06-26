@@ -37,8 +37,7 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
     Graphical parameter settings for the resulting grob.
   }
   \item{\dots}{
-    For \code{polylineoffsetGrob}, arguments passed on to \code{polylineoffset}.
-    For \code{grid.polylineoffset}, arguments used by methods.
+    For \code{polylineoffsetGrob}, arguments passed on to \code{polyclip::polylineoffset}.
   }
 }
 \details{

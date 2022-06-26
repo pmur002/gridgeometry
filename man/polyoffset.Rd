@@ -56,7 +56,7 @@ polyoffset(A, delta, ...)
     (passed to \code{grid.get}).
   }
   \item{\dots}{
-    Arguments used by methods.
+    For \code{polyoffsetGrob}, arguments passed on to \code{polyclip::polyoffset}.
   }
 }
 \details{
