@@ -24,12 +24,7 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
   \item{rule}{
     A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
   }
-  \item{jointype}{
-    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}. See Details for further explanation.
-  }
-  \item{endtype}{
-    Type of geometrical operation to be performed a the start and end of each line. One of  \code{"closedpolygon"},       \code{"closedline"}, \code{"openbutt"}, \code{"opensquare"}, \code{"openround"}. See Details for further explanation.
-  }
+  
   \item{name}{
     A name for the resulting grob.
   }
@@ -51,21 +46,10 @@ grid.polylineoffset(A, delta, rule = "winding", ...)
   (and the new grob will use the same \code{gp} settings as the
   old grob).
   
-  The argument \code{jointype} determines what happens at the vertices of each line.
-  \itemize{
-    \item{\code{jointype = "round"}: a circular arc is generated.}
-    \item{\code{jointype = "square"}: circular arc is replaced by a single straight line.}
-    \item{\code{jointype = "miter"}: circular arc is omitted entirely and replaced by a single straight line.}
-  }
+  The argument \code{jointype} determines what happens at the vertices of each line at \code{polyclip::polylineoffset}.
   
-  The argument \code{endtype} determines what happens at the beginning and end of each line.
-  \itemize{
-    \item{\code{endtype = "closedpolygon"}: ends are joined together (using the \code{jointype value}) and the path filled as a polygon.}
-    \item{\code{endtype = "closedline"}: nds are joined together (using the \code{jointype value}) and the path filled as a polyline.}
-    \item{\code{endtype = "openbutt"}: ends are squared off abruptly.}
-    \item{\code{endtype = "opensquare"}: ends are squared off at distance \code{delta}.}
-    \item{\code{endtype = "openbutt"}: ends are replaced by a semicircular arc.}
-  }
+  The argument \code{endtype} determines what happens at the beginning and end of each line at \code{polyclip::polylineoffset}.
+  
 }
 \value{
   \code{polylineoffsetGrob} returns a gTree with offset grob coordinate.

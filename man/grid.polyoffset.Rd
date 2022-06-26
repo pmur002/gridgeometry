@@ -30,10 +30,7 @@ grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
   \item{rule}{
     A character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
   }
-  \item{jointype}{
-    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}.
-    See Details for further explanation.
-  }
+  
   \item{name}{
     A name for the resulting grob.
   }
@@ -55,12 +52,8 @@ grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
   (and the new grob will use the same \code{gp} settings as the
   old grob).
   
-  The argument \code{jointype} determines what happens at the vertices of each line.
-  \itemize{
-    \item{\code{jointype = "round"}: a circular arc is generated.}
-    \item{\code{jointype = "square"}: circular arc is replaced by a single straight line.}
-    \item{\code{jointype = "miter"}: circular arc is omitted entirely and replaced by a single straight line.}
-  }
+  The argument \code{jointype} determines what happens at the vertices of each line at \code{polyclip::polyoffset}.
+  
 }
 \value{
   \code{polyoffsetGrob} returns a gTree with offset grob coordinate.
