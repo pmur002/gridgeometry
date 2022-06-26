@@ -179,7 +179,7 @@ polyoffset.gList <- function(A, delta, reduce = "union", ...)
   coords <- polyoffset(polyA, delta, ...)
 }
 
-polyoffset.list <- function(A, delta, ...)
+polyoffset.list <- function(A, delta, reduce = "union", ...)
 {
   if (length(A) == 0)
   {
@@ -201,13 +201,13 @@ polyoffset.list <- function(A, delta, ...)
   coords <- do.call(polyclip::polyoffset, c(list(A = A, delta = delta), param))
 }
 
-polyoffset.character <- function(A, delta, ..., reduce = "union", strict=FALSE, grep=FALSE, global=FALSE)
+polyoffset.character <- function(A, delta, reduce = "union", ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- xyListFromGrob(grid.get(A, strict, grep, global), op = reduce, closed = T)
   coords <- polyoffset(polyA, delta, ...)
 }
 
-polyoffset.gPath <- function(A, delta, ..., reduce = "union", strict=FALSE, grep=FALSE, global=FALSE)
+polyoffset.gPath <- function(A, delta, reduce = "union", ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- xyListFromGrob(grid.get(A, strict, grep, global), reduce, closed = T)
   coords <- polyoffset(polyA, delta, ...)

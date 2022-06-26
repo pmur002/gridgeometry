@@ -10,7 +10,7 @@
 \usage{
 polylineoffsetGrob(A, delta, rule = "winding",
              name=NULL, gp=gpar(),  ...) 
-grid.polylineoffset(A, delta, rule = "winding", ...)
+grid.polylineoffset(A, delta, ...)
 }
 \arguments{
   \item{A}{

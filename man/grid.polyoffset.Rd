@@ -10,7 +10,7 @@
 \usage{
 polyoffsetGrob(A, delta, reduce = "union", rule = "winding",
              name=NULL, gp=gpar(),  ...) 
-grid.polyoffset(A, delta, reduce = "union", rule = "winding", ...)
+grid.polyoffset(A, delta, ...)
 }
 \arguments{
   \item{A}{

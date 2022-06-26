@@ -11,19 +11,16 @@
   Given a polygonal region or closed grob, generate the offset region (guard region, buffer region, morphological dilation) formed by shifting the boundary outwards by a specific distance.  
 }
 \usage{
-polyoffset(A, delta, ...)
+polyoffset(A, delta, reduce = "union", ...)
 \method{polyoffset}{grob}(A, delta, reduce = "union",
          ...)
 \method{polyoffset}{gList}(A, delta, reduce = "union",
          ...)
 \method{polyoffset}{gPath}(A, delta, reduce = "union",
-                         strict=FALSE, grep=FALSE, global=FALSE,
-                         ...)
+                         ..., strict=FALSE, grep=FALSE, global=FALSE)
 \method{polyoffset}{character}(A, delta, reduce = "union",
-                             strict=FALSE, grep=FALSE, global=FALSE,
-                             ...)
+                             ..., strict=FALSE, grep=FALSE, global=FALSE)
 \method{polyoffset}{list}(A, delta, reduce = "union",
-                             strict=FALSE, grep=FALSE, global=FALSE,
                              ...)
 }
 \arguments{

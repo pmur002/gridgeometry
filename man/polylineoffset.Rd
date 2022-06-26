@@ -17,13 +17,10 @@ polylineoffset(A, delta, ...)
 \method{polylineoffset}{gList}(A, delta,
          ...)
 \method{polylineoffset}{gPath}(A, delta,
-                         strict=FALSE, grep=FALSE, global=FALSE,
-                         ...)
+                         ..., strict=FALSE, grep=FALSE, global=FALSE)
 \method{polylineoffset}{character}(A, delta,
-                             strict=FALSE, grep=FALSE, global=FALSE,
-                             ...)
+                             ..., strict=FALSE, grep=FALSE, global=FALSE)
 \method{polylineoffset}{list}(A, delta,
-                             strict=FALSE, grep=FALSE, global=FALSE,
                              ...)
 }
 \arguments{
