@@ -1,5 +1,6 @@
 \name{polyoffset}
 \alias{polyoffset}
+\alias{polyoffset.list}
 \alias{polyoffset.grob}
 \alias{polyoffset.gList}
 \alias{polyoffset.gPath}
@@ -43,11 +44,6 @@ polyoffset(A, delta, reduce = "union", ...)
     \code{"xor"}.
   }
   
-  \item{jointype}{
-    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}.  See Details for further explanation.
-    
-  }
-  
   \item{strict, grep, global}{
     Arguments controlling the interpretation of the gPath
     (passed to \code{grid.get}).
@@ -58,6 +54,8 @@ polyoffset(A, delta, reduce = "union", ...)
 }
 \details{
   Calculate the offset region by using the subject coordinates shift by a delta distance.
+  
+  Examples of useful arguments that will be passed on to polyclip::polyoffset() are \code{jointype}.
   
   The argument \code{jointype} determines what happens at the vertices of each line.
   \itemize{

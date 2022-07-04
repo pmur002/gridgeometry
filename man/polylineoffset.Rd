@@ -1,5 +1,6 @@
 \name{polylineoffset}
 \alias{polylineoffset}
+\alias{polylineoffset.list}
 \alias{polylineoffset.grob}
 \alias{polylineoffset.gList}
 \alias{polylineoffset.gPath}
@@ -35,14 +36,7 @@ polylineoffset(A, delta, ...)
   \item{delta}{
     Distance over which the boundary should be shifted.
   }
-  
-  \item{jointype}{
-    Type of join operation to be performed at each vertex. One of \code{"round"}, \code{"square"}, \code{"miter"}. See Details for further explanation.
-    
-  }
-  \item{endtype}{
-    Type of geometrical operation to be performed a the start and end of each line. One of  \code{"closedpolygon"},       \code{"closedline"}, \code{"openbutt"}, \code{"opensquare"}, \code{"openround"}. See Details for further explanation.
-  }
+ 
   \item{strict, grep, global}{
     Arguments controlling the interpretation of the gPath
     (passed to \code{grid.get}).

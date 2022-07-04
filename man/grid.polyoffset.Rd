@@ -52,7 +52,9 @@ grid.polyoffset(A, delta, ...)
   (and the new grob will use the same \code{gp} settings as the
   old grob).
   
-  The argument \code{jointype} determines what happens at the vertices of each line at \code{polyclip::polyoffset}.
+  Examples of useful arguments that will be passed on to polyclip::polyoffset() are \code{jointype}.
+
+  The argument \code{jointype} determines what happens at the vertices of each line at \code{polyclip::polyoffset}. See code link \code{polyoffset}.
   
   The argument \code{rule} is a character value describing the fill rule to be used. One of \code{"winding"}, \code{"evenodd"}
   
