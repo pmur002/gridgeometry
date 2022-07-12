@@ -1,9 +1,10 @@
 Package: gridGeometry
 Type: Package
 Title: Polygon Geometry in 'grid'
-Version: 0.3-1
-Author: Paul Murrell
-Maintainer: Paul Murrell <paul@stat.auckland.ac.nz>
+Version: 0.4-0
+Authors@R: c(person("Paul", "Murrell", role = c("aut", "cre"),
+                    email = "paul@stat.auckland.ac.nz"),
+             person("Jack", "Wong", role = "aut"))
 Description: Functions for performing polygon geometry with 'grid' grobs.
              This allows complex shapes to be defined by combining simpler
              shapes.  

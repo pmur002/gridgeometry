@@ -2,6 +2,13 @@
 \title{NEWS file for the gridGeometry package}
 \encoding{UTF-8}
 
+\section{Changes in version 0.4-0}{
+  \itemize{
+    \item New functions \code{grid.polyoffset()} and
+    \code{grid.polylineoffset()}.
+  }
+}
+
 \section{Changes in version 0.3-1}{
   \itemize{
     \item The default \code{op} for \code{xyListFromGrob()}
