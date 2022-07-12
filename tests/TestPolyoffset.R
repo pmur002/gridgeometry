@@ -1,5 +1,5 @@
 #polyoffset tests
-library(gridGeometry, lib.loc = "D:/Stats781/library")
+library(gridGeometry)
 
 #Prepare the input in different type: grob, list
 grobPolygon <- polygonGrob(x = c(.5, .8, .8, .5, .6), y = c(.3, .3, .8, .8, .55), name = "Polygon 1")

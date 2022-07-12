@@ -80,14 +80,14 @@ grid.polyoffset.gPath <- function(A, delta, reduce = "union", ...)
 
 makeContent.polylineoffsetGrob <- function(x)
 {
-  coords <- polylineoffset(x$A, x$delta, x$polylineoffsetArgs)
+  coords <- polylineoffset(x$A, x$delta, unlist(x$polylineoffsetArgs))
   grob <- xyListPath(coords, rule = x$rule)
   setChildren(x, gList(grob))
 }
 
 makeContent.polyoffsetGrob <- function(x)
 {
-  coords <- polyoffset(x$A, x$delta, x$reduce, x$polyoffsetArgs)
+  coords <- polyoffset(x$A, x$delta, x$reduce, unlist(x$polyoffsetArgs))
   grob <- xyListPath(coords, rule = x$rule)
   setChildren(x, gList(grob))
 }
@@ -130,12 +130,12 @@ polylineoffset.list <- function(A, delta, ...)
   }
   delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
   
-  param <- list(...)
-  if (!"jointype" %in% names(list(...)))
+  param <- unlist(list(...))
+  if (!"jointype" %in% names(param))
   {
     param <- c(param, jointype = "round")
   }
-  if (!"endtype" %in% names(list(...)))
+  if (!"endtype" %in% names(param))
   {
     param <- c(param, endtype = "openround")
   }
@@ -166,7 +166,7 @@ polyoffset.grob <- function(A, delta, reduce = "union", ...)
     stop("Empty coords grob object.")
   }
   polyA <- xyListFromGrob(A, op = reduce, closed = T)
-  coords <- polyoffset(polyA, delta, ...)
+  coords <- polyoffset(polyA, delta, reduce, ...)
 }
 
 polyoffset.gList <- function(A, delta, reduce = "union", ...)
@@ -176,7 +176,7 @@ polyoffset.gList <- function(A, delta, reduce = "union", ...)
     stop("Empty coords grob object.")
   }
   polyA <- xyListFromGrob(A, op = reduce, closed = T)
-  coords <- polyoffset(polyA, delta, ...)
+  coords <- polyoffset(polyA, delta, reduce, ...)
 }
 
 polyoffset.list <- function(A, delta, reduce = "union", ...)
@@ -192,8 +192,8 @@ polyoffset.list <- function(A, delta, reduce = "union", ...)
   }
   delta <- min(convertWidth(delta, "inches", valueOnly = T), convertHeight(delta, "inches", valueOnly = T))
   
-  param <- list(...)
-  if (!"jointype" %in% names(list(...)))
+  param <- unlist(list(...))
+  if (!"jointype" %in% names(param))
   {
     param <- c(param, jointype = "round")
   }
@@ -204,11 +204,11 @@ polyoffset.list <- function(A, delta, reduce = "union", ...)
 polyoffset.character <- function(A, delta, reduce = "union", ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- xyListFromGrob(grid.get(A, strict, grep, global), op = reduce, closed = T)
-  coords <- polyoffset(polyA, delta, ...)
+  coords <- polyoffset(polyA, delta, reduce, ...)
 }
 
 polyoffset.gPath <- function(A, delta, reduce = "union", ..., strict=FALSE, grep=FALSE, global=FALSE)
 {
   polyA <- xyListFromGrob(grid.get(A, strict, grep, global), reduce, closed = T)
-  coords <- polyoffset(polyA, delta, ...)
+  coords <- polyoffset(polyA, delta, reduce, ...)
 }

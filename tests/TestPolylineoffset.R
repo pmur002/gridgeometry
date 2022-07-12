@@ -1,5 +1,5 @@
 #polylineoffset tests
-library(gridGeometry, lib.loc = "D:/Stats781/library")
+library(gridGeometry)
 
 #Prepare the input in different type: grob, list
 grobLine = linesGrob(x = c(.4, .8, .8, .2, .6), y = c(.3, .3, .8, .8, .6), name = "Line 1")

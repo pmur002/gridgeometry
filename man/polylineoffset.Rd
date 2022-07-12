@@ -75,7 +75,8 @@ polylineoffset(A, delta, ...)
 }
 \examples{
 grobLine = linesGrob(x = c(.4, .8, .8, .2, .6), y = c(.3, .3, .8, .8, .6), name = "Line 1")
-offset <- polylineoffset(grobLine, delta = unit(0.1, "cm"), jointype="square", endtype = "opensquare")
+offset <- polylineoffset(grobLine, delta = unit(0.1, "cm"), 
+                        jointype="square", endtype = "opensquare")
 }
 \keyword{ dplot }
 \keyword{ aplot }
