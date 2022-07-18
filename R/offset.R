@@ -20,13 +20,13 @@ grid.polylineoffset <- function(A, delta, ...) {
 grid.polylineoffset.grob <- function(A, delta, ...) {
     g <- polylineoffsetGrob(A, delta, ...)
     grid.draw(g)
-    return(g)
+    invisible(g)
 }
 
 grid.polylineoffset.gList <- function(A, delta, ...) {
     g <- polylineoffsetGrob(A, delta, ...)
     grid.draw(g)
-    return(g)
+    invisible(g)
 }
 
 grid.polylineoffset.gPath <- function(A, delta, ..., name=A$name, gp=NULL,
@@ -55,20 +55,20 @@ grid.polyoffset <- function(A, delta, ...) {
 grid.polyoffset.grob <- function(A, delta, reduce = "union", ...) {
     g <- polyoffsetGrob(A, delta, reduce, ...)
     grid.draw(g)
-    return(g)
+    invisible(g)
 }
 
 grid.polyoffset.gList <- function(A, delta, reduce = "union", ...) {
     g <- polyoffsetGrob(A, delta, reduce, ...)
     grid.draw(g)
-    return(g)
+    invisible(g)
 }
 
 grid.polyoffset.character <- function(A, delta, reduce = "union", ...)
 {
     g <- polyoffsetGrob(A, delta, reduce, ...)
     grid.draw(g)
-    return (g)
+    invisible(g)
 }
 
 grid.polyoffset.gPath <- function(A, delta, reduce = "union", ...,
