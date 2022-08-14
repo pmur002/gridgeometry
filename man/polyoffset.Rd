@@ -39,7 +39,7 @@ polyoffset(A, delta, reduce = "union", ...)
   
   \item{reduce}{
     A character value describing the operation to be used if 
-    \code{x} needs to be collapsed to a single shape.  One of
+    \code{A} needs to be collapsed to a single shape.  One of
     \code{"intersection"}, \code{"flatten"}, \code{"minus"}, \code{"union"}, or
     \code{"xor"}.
   }
