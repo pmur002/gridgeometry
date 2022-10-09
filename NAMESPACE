@@ -16,26 +16,56 @@ export("xyListPath",
 
        "polyclip",
        "trim",
+       "polylineoffset",
+       "polyoffset",
 
        "grid.polyclip",
+       "grid.reduce",
        "grid.trim",
+       "grid.polyoffset",
+       "grid.polylineoffset",
        "polyclipGrob",
+
+       "polylineoffsetGrob",
+       "polyoffsetGrob",
+
+       "reduceGrob",
        "trimGrob")
 
 
-S3method("trim", "character")
+
 S3method("trim", "default")
+S3method("trim", "character")
+S3method("trim", "GridGrobCoords")
+S3method("trim", "GridGTreeCoords")
 S3method("trim", "grob")
 S3method("trim", "gPath")
          
 S3method("makeContent", "polyclipgrob")
+S3method("makeContent", "reducegrob")
 S3method("makeContent", "trimgrob")
+S3method("makeContent", "polylineoffsetGrob")
+S3method("makeContent", "polyoffsetGrob")
 
 S3method("polyclip", "character")
 S3method("polyclip", "default")
 S3method("polyclip", "gList")
 S3method("polyclip", "gPath")
 S3method("polyclip", "grob")
+
+S3method("polylineoffset", "grob")
+S3method("polylineoffset", "list")
+S3method("polylineoffset", "gPath")
+S3method("polylineoffset", "gList")
+S3method("polylineoffset", "character")
+
+
+S3method("polyoffset", "grob")
+S3method("polyoffset", "list")
+S3method("polyoffset", "gPath")
+S3method("polyoffset", "gList")
+S3method("polyoffset", "character")
+
 
 S3method("grid.polyclip", "character")
 S3method("grid.polyclip", "default")
@@ -45,5 +75,19 @@ S3method("grid.trim", "character")
 S3method("grid.trim", "default")
 S3method("grid.trim", "gPath")
 
+S3method("grid.polyoffset", "grob")
+S3method("grid.polyoffset", "gList")
+S3method("grid.polyoffset", "gPath")
+S3method("grid.polyoffset", "character")
+
+S3method("grid.polylineoffset", "grob")
+S3method("grid.polylineoffset", "gList")
+S3method("grid.polylineoffset", "gPath")
+S3method("grid.polylineoffset", "character")
+
 S3method("xyListFromCoords", "GridGrobCoords")
 S3method("xyListFromCoords", "GridGTreeCoords")
+
+S3method("grid.reduce", "grob")
+S3method("grid.reduce", "gPath")
+S3method("grid.reduce", "character")

@@ -9,8 +9,17 @@ trim <- function(x, from, to, ...) {
 trim.default <- function(x, from, to, rep=FALSE, ...) {
     if ("x" %in% names(x))
         x <- list(x)
+    unlist(lapply(x, trimLine, from, to, rep), recursive=FALSE)
+}
+    
+trim.GridGrobCoords <- function(x, from, to, rep=FALSE, ...) {
     ## Each trimLine() result is a list of lists
     unlist(lapply(x, trimLine, from, to, rep), recursive=FALSE)
+}
+
+trim.GridGTreeCoords <- function(x, from, to, rep=FALSE, ...) {
+    childCoords <- lapply(x, trim, from, to, rep=FALSE, ...)
+    do.call(c, childCoords)
 }
 
 trim.grob <- function(x, from, to, rep=FALSE, ...) {
