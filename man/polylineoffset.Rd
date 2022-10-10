@@ -61,7 +61,7 @@ polylineoffset(A, delta, ...)
     \item{\code{endtype = "closedline"}: nds are joined together (using the \code{jointype value}) and the path filled as a polyline.}
     \item{\code{endtype = "openbutt"}: ends are squared off abruptly.}
     \item{\code{endtype = "opensquare"}: ends are squared off at distance \code{delta}.}
-    \item{\code{endtype = "openbutt"}: ends are replaced by a semicircular arc.}
+    \item{\code{endtype = "openround"}: ends are replaced by a semicircular arc.}
   }
 }
 \value{
