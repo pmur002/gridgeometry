@@ -134,6 +134,10 @@ polylineoffset.list <- function(A, delta, ...) {
     if (!"jointype" %in% names(param)) {
         param <- c(param, jointype = "round")
     }
+    if ("jointype" %in% names(param) &&
+        param$jointype == "mitre") {
+        param$jointype <- "miter"
+    }
     if (!"endtype" %in% names(param)) {
         param <- c(param, endtype = "openround")
     }
@@ -187,6 +191,10 @@ polyoffset.list <- function(A, delta, reduce = "union", ...) {
     param <- list(...)
     if (!"jointype" %in% names(param)) {
         param <- c(param, jointype = "round")
+    }
+    if ("jointype" %in% names(param) &&
+        param$jointype == "mitre") {
+        param$jointype <- "miter"
     }
   
     do.call(polyclip::polyoffset, c(list(A = A, delta = delta), param))
