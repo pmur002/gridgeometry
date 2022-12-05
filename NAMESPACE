@@ -18,16 +18,19 @@ export("xyListPath",
        "trim",
        "polylineoffset",
        "polyoffset",
+       "polyminkowski",
 
        "grid.polyclip",
        "grid.reduce",
        "grid.trim",
        "grid.polyoffset",
        "grid.polylineoffset",
-       "polyclipGrob",
+       "grid.minkowski",
 
+       "polyclipGrob",
        "polylineoffsetGrob",
        "polyoffsetGrob",
+       "minkowskiGrob",
 
        "reduceGrob",
        "trimGrob")
@@ -46,6 +49,7 @@ S3method("makeContent", "reducegrob")
 S3method("makeContent", "trimgrob")
 S3method("makeContent", "polylineoffsetGrob")
 S3method("makeContent", "polyoffsetGrob")
+S3method("makeContent", "minkowskiGrob")
 
 S3method("polyclip", "character")
 S3method("polyclip", "default")
@@ -59,13 +63,17 @@ S3method("polylineoffset", "gPath")
 S3method("polylineoffset", "gList")
 S3method("polylineoffset", "character")
 
-
 S3method("polyoffset", "grob")
 S3method("polyoffset", "list")
 S3method("polyoffset", "gPath")
 S3method("polyoffset", "gList")
 S3method("polyoffset", "character")
 
+S3method("polyminkowski", "default")
+S3method("polyminkowski", "grob")
+S3method("polyminkowski", "gPath")
+S3method("polyminkowski", "gList")
+S3method("polyminkowski", "character")
 
 S3method("grid.polyclip", "character")
 S3method("grid.polyclip", "default")
@@ -84,6 +92,10 @@ S3method("grid.polylineoffset", "grob")
 S3method("grid.polylineoffset", "gList")
 S3method("grid.polylineoffset", "gPath")
 S3method("grid.polylineoffset", "character")
+
+S3method("grid.minkowski", "default")
+S3method("grid.minkowski", "gPath")
+S3method("grid.minkowski", "character")
 
 S3method("xyListFromCoords", "GridGrobCoords")
 S3method("xyListFromCoords", "GridGTreeCoords")
