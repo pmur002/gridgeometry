@@ -10,62 +10,84 @@ polyminkowski.default <- function(A, B, ...) {
     polyclip::polyminkowski(A, B, ...)
 }
 
-polyminkowskiGrob <- function(A, B, reduceA, reduceB, ...) {
-    if (inherits(B, "gPath") || is.character(B)) {
-        B <- grid.get(B, ...)
-    }
+polyminkowskiGridGrob <- function(A, B, closed, reduceA, reduceB, ...) {
     if (!(inherits(B, "grob") || inherits(B, "gList")))
         stop("Argument 'B' must be a grob")
     polyA <- xyListFromGrob(A, op = reduceA, closed = TRUE, ...)
-    polyB <- xyListFromGrob(B, op = reduceB, closed = TRUE, ...)
-    polyclip::polyminkowski(polyA, polyB, ...)
+    polyB <- xyListFromGrob(B, op = reduceB, closed = closed, ...)
+    polyclip::polyminkowski(polyA, polyB, closed = closed, ...)
 }
 
-polyminkowski.grob <- function(A, B, 
+polyminkowski.grob <- function(A, B, closed=isClosedShape(B),
                                reduceA = "union",
                                reduceB = "union",
                                ...) {
-    polyminkowskiGrob(A, B, reduceA, reduceB, ...)
+    polyminkowskiGridGrob(A, B, closed, reduceA, reduceB, ...)
 }
 
-polyminkowski.gList <- function(A, B,
+polyminkowski.gList <- function(A, B, closed=isClosedShape(B),
                                 reduceA = "union",
                                 reduceB = "union",
                                 ...) {
-    polyminkowskiGrob(A, B, reduceA, reduceB, ...)
+    polyminkowskiGridGrob(A, B, closed, reduceA, reduceB, ...)
 }
 
-polyminkowski.gPath <- function(A, B, 
+polyminkowski.gPath <- function(A, B, closed,
                                 strict=FALSE, grep=FALSE, global=FALSE,
                                 reduceA = "union",
                                 reduceB = "union",
                                 ...) {
     A <- grid.get(A, strict, grep, global)
-    polyminkowskiGrob(A, B, reduceA, reduceB, ...)
+    if (inherits(B, "gPath") || is.character(B)) {
+        B <- grid.get(B, ...)
+    }
+    if (missing(closed))
+        closed <- isClosedShape(B)
+    polyminkowskiGridGrob(A, B, closed, reduceA, reduceB, ...)
 }
 
-polyminkowski.character <- function(A, B,
+polyminkowski.character <- function(A, B, closed,
                                     strict=FALSE, grep=FALSE, global=FALSE,
                                     reduceA = "union",
                                     reduceB = "union",
                                     ...) {
     A <- grid.get(A, strict, grep, global)
-    polyminkowskiGrob(A, B, reduceA, reduceB, ...)
+    if (inherits(B, "gPath") || is.character(B)) {
+        B <- grid.get(B, ...)
+    }
+    if (missing(closed))
+        closed <- isClosedShape(B)
+    polyminkowskiGridGrob(A, B, closed, reduceA, reduceB, ...)
 }
 
 ################################################################################
 ## High level grob interface
 makeContent.minkowskiGrob <- function(x) {
-    offsetpts <- do.call(polyminkowski, c(list(A=x$A, B=x$B), x$minkowskiArgs))
-    setChildren(x, gList(xyListToPath(offsetpts)))
+    children <- vector("list", 2)
+    closedPaths <- do.call(polyminkowski,
+                           c(list(A=x$A, B=x$B, closed=TRUE),
+                             x$polyclipArgs))
+    if (length(closedPaths)) {
+        children[[1]] <- x$grobFn(closedPaths,
+                                  name=paste0(x$name, ".closed"))
+    }
+    openPaths <- do.call(polyminkowski,
+                         c(list(A=x$A, B=x$B, closed=FALSE),
+                           x$polyclipArgs))
+    if (length(openPaths)) {
+        children[[2]] <- x$grobFn(openPaths, 
+                                  name=paste0(x$name, ".open"))
+    }
+    setChildren(x, do.call(gList, children[!is.null(children)]))
 }
 
 minkowskiGrob <- function(A, B, 
+                          grobFn=xyListToPath,
                           name=NULL, gp=gpar(),
                           ...) {
     if (!(grobArg(A) && grobArg(B)))
         stop("Invalid argument")
-    gTree(A=A, B=B, 
+    gTree(A=A, B=B, grobFn=grobFn,
           polyclipArgs=list(...),
           gp=gp, name=name, cl="minkowskiGrob")
 }

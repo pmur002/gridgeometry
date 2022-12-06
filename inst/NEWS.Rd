@@ -5,7 +5,10 @@
 \section{Changes in version 0.4-0}{
   \itemize{
     \item New functions \code{grid.polyoffset()} and
-    \code{grid.polylineoffset()}.
+    \code{grid.polylineoffset()} for generating offset regions.
+    
+    \item New function \code{grid.minkowski()} for generating
+    Minkowski sums of grobs.
   }
 }
 
