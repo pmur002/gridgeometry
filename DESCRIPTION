@@ -8,7 +8,7 @@ Authors@R: c(person("Paul", "Murrell", role = c("aut", "cre"),
 Description: Functions for performing polygon geometry with 'grid' grobs.
              This allows complex shapes to be defined by combining simpler
              shapes.  
-URL: https://github.com/pmur002/gridgeometry, https://stattech.wordpress.fos.auckland.ac.nz/2019/03/04/2019-01-a-geometry-engine-interface-for-grid/, https://stattech.blogs.auckland.ac.nz/2022/06/01/2022-02-constructive-geometry-for-complex-grobs/
+URL: https://github.com/pmur002/gridgeometry, https://stattech.wordpress.fos.auckland.ac.nz/2019/03/04/2019-01-a-geometry-engine-interface-for-grid/, https://stattech.blogs.auckland.ac.nz/2022/06/01/2022-02-constructive-geometry-for-complex-grobs/, https://stattech.wordpress.fos.auckland.ac.nz/2022/12/14/2022-03-offsetting-lines-and-polygons-in-grid/
 Depends: R (>= 3.6.0), grid
 Imports: grDevices, polyclip (>= 1.10-0)
 Suggests: graphics, lattice
