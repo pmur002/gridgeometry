@@ -2,6 +2,13 @@
 \title{NEWS file for the gridGeometry package}
 \encoding{UTF-8}
 
+\section{Changes in version 0.4-1}{
+  \itemize{
+    \item Handle empty list or \code{NULL} input in
+    \code{xyListToPolygon()} and \code{xyListToPath()}.
+  }
+}
+
 \section{Changes in version 0.4-0}{
   \itemize{
     \item New functions \code{grid.polyoffset()} and

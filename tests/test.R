@@ -217,3 +217,15 @@ gt <- gTree(children=gList(path, rect))
 grid.newpage()
 grid.reduce(gt, gp=gpar(fill="grey"))
 
+################################################################################
+## xyListTo*()
+
+## Check can handle empty list
+
+xyListToLine(NULL)
+xyListToPolygon(NULL)
+xyListToPath(NULL)
+
+xyListToLine(list())
+xyListToPolygon(list())
+xyListToPath(list())

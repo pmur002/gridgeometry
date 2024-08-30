@@ -4,6 +4,10 @@
 
 ## Convert (closed) 'polyclip' polygon result to 'grid' path
 xyListPath <- function(x, rule, name=NULL, gp=gpar()) {
+    ## Handle empty 'x'
+    if (length(x) == 0) {
+        return(nullGrob(name=name))
+    }
     if (missing(rule)) {
         if (is.null(attr(x, "rule")))
             rule <- "winding"
@@ -28,6 +32,10 @@ xyListToPath <- xyListPath
 
 ## Convert (closed) 'polyclip' polygon result to 'grid' polygons
 xyListPolygon <- function(x, name=NULL, gp=gpar()) {
+    ## Handle empty 'x'
+    if (length(x) == 0) {
+        return(nullGrob(name=name))
+    }
     ## Remove any coordinate sets that are too short
     x <- x[sapply(x, function(c) length(c$x) > 1)]
     if (length(x) == 0) {

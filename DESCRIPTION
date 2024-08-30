@@ -1,7 +1,7 @@
 Package: gridGeometry
 Type: Package
 Title: Polygon Geometry in 'grid'
-Version: 0.4-0
+Version: 0.4-1
 Authors@R: c(person("Paul", "Murrell", role = c("aut", "cre"),
                     email = "paul@stat.auckland.ac.nz"),
              person("Jack", "Wong", role = "aut"))
