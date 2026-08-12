@@ -6,6 +6,8 @@
   \itemize{
     \item Handle empty list or \code{NULL} input in
     \code{xyListToPolygon()} and \code{xyListToPath()}.
+
+    \item Close temporary \code{pdf()} device opened by \code{trim()}.
   }
 }
 

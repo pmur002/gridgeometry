@@ -53,7 +53,8 @@ trimLine <- function(line, from, to, rep) {
         ## so "npc" units relative to length of line
         cd <- dev.cur()
         pdf(NULL, width=totLength)
-        on.exit(dev.set(cd))
+        pd <- dev.cur()
+        on.exit({ dev.set(pd); dev.off(); dev.set(cd) })
     }
     if (is.unit(from))
         from <- convertX(from, "in", valueOnly=TRUE)/totLength
